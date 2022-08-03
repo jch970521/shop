@@ -26,9 +26,9 @@ public class CustomerDao {
 				loginCustomer.setCustomerName(rs.getString("customer_name"));
 			}
 		}finally {
-			rs.close();
-			stmt.close();
-			conn.close();
+			if(rs!= null) {rs.close();}
+			if(stmt!= null) {stmt.close();}
+			if(conn!= null) {conn.close();}
 		}
 		return loginCustomer;
 	}
