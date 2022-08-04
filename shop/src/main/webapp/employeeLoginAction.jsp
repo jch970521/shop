@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "vo.*" %>
-<%@ page import = "model.*" %>
+<%@ page import = "repository.*" %>
+<%@ page import ="service.*" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 
@@ -9,31 +10,34 @@
 	
 	System.out.println(employeeId);
 	System.out.println(employeePw);
-	
+
 	if(employeeId==null || employeePw == null){
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
 		return;
 	}
+	EmployeeService loginEmployee = new EmployeeService();
+	Employee paramEmployee = new Employee();
 	
-	Employee employee = new Employee();
-	employee.setEmployeeId(employeeId);
-	employee.setEmployeePass(employeePw);
+	paramEmployee.setEmployeeId(employeeId);
+	paramEmployee.setEmployeePass(employeePw);
 
-	System.out.println(employee.getEmployeeId());
-	System.out.println(employee.getEmployeePass());
+	System.out.println(paramEmployee.getEmployeeId());
+	System.out.println(paramEmployee.getEmployeePass());
 	
-	EmployeeDao employeeDao = new EmployeeDao();
-	Employee loginEmployee = employeeDao.login(employee);
-	
-	if(loginEmployee == null ){
-		response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
-		return;
-	} else {
-		session.setAttribute("id", loginEmployee.getEmployeeId());
-		session.setAttribute("name", loginEmployee.getEmployeeName());
-		session.setAttribute("user", "Employee");
+	if ((paramEmployee = loginEmployee.login(paramEmployee))==null){
+	response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
+		
 	}
 	
-	session.setAttribute("loginEmployee", loginEmployee);
-	response.sendRedirect(request.getContextPath() + "/index.jsp");
+	
+	if(paramEmployee.getEmployeeId()!=null){
+	// Object <-다형성 String 추상화,상속,다형성,캡슐화
+	session.setAttribute("id", paramEmployee.getEmployeeId()); // Object <-다형성 Integer <-오토박싱 int
+	session.setAttribute("name", paramEmployee.getEmployeeName());
+	session.setAttribute("user", "Employee");
+	response.sendRedirect(request.getContextPath()+"/index.jsp");
+	
+	}else{response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
+	
+	}
 %>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "vo.*" %>
-<%@ page import = "model.*" %>
+<%@ page import = "repository.*" %>
+<%@ page import = "service.*" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 
@@ -14,26 +15,29 @@
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
 		return;
 	}
+	CustomerService loginCustomer = new CustomerService();
+	Customer paramCustomer = new Customer();
 	
-	Customer customer = new Customer();
-	customer.setCustomerId(customerId);
-	customer.setCustomerPass(customerPw);
+	paramCustomer.setCustomerId(customerId);
+	paramCustomer.setCustomerPass(customerPw); // 값담기
 
-	System.out.println(customer.getCustomerId());
-	System.out.println(customer.getCustomerPass());
 	
-	CustomerDao customerDao = new CustomerDao();
-	Customer loginCustomer = customerDao.login(customer);
+	System.out.println(paramCustomer.getCustomerId());
+	System.out.println(paramCustomer.getCustomerPass()); //값 확인
 	
-	if(loginCustomer == null ){
-		response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
-		return;
-	} else {
-		session.setAttribute("id", loginCustomer.getCustomerId());
-		session.setAttribute("name", loginCustomer.getCustomerName());
-		session.setAttribute("user", "Customer");
+	if ((paramCustomer = loginCustomer.login(paramCustomer))==null){
+		response.sendRedirect(request.getContextPath()+"/loginForm,jsp");
 	}
 	
-	session.setAttribute("loginCustomer", loginCustomer);
-	response.sendRedirect(request.getContextPath() + "/index.jsp");
+	if(paramCustomer.getCustomerId()!=null){
+		session.setAttribute("id", paramCustomer.getCustomerId());
+		session.setAttribute("name", paramCustomer.getCustomerName());
+		session.setAttribute("user", "Customer");
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
+		
+	}else {
+		response.sendRedirect(request.getContextPath()+"/loginForm,jsp");
+	}
+	
+	
 %>

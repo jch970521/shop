@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "vo.*" %>
-<%@ page import = "model.*" %>
+<%@ page import = "repository.*" %>
 <%
 	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 	Employee loginEmployee = (Employee)session.getAttribute("loginEmployee");
@@ -43,6 +43,7 @@
 	<h1 style="text-align:center" ><%=session.getAttribute("name")%>님 환영합니다.</h1>
 </form>
 <a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+<a href="<%=request.getContextPath()%>/<%=session.getAttribute("user")%>outIdForm.jsp">회원탈퇴</a>
 </div>
 </body>
 </html>
