@@ -49,7 +49,9 @@
 				<table border="1">
 					<tr>
 						<td>ID</td>
-						<td><input type="text" name="employeeId" id="employeeId"></td>
+						<td>
+						<input type="text" name="employeeId" id="employeeId">
+						</td>
 					</tr>
 					<tr>
 						<td>pw</td>
@@ -61,6 +63,10 @@
 		</form>
 	</div>
 </div>
+<a href="<%=request.getContextPath()%>/addCustomer.jsp">고객 회원가입</a>
+<a href="<%=request.getContextPath()%>/addemployee.jsp">스태프 회원가입</a>
+	
+
 </body>
 <script>
 

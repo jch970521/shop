@@ -5,7 +5,6 @@
 <%@ page import = "java.sql.*" %>
 <%
 	request.setCharacterEncoding("UTF-8");
-	Connection conn = null;
 	String Id = request.getParameter("id");
 	String Pw = request.getParameter("pw");
 
@@ -32,7 +31,8 @@
 
 	// Serivce에 customer 담기 여기서 OutIdDao랑 CustomerDao가 같이 실행됨
 	// 메서드를 따로 두번 out , delete를 해주지않아도 service에서 처리해주는 ..?
-	
+		
+	// 성공시 페이지 재요청
 	
 	response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
 	

@@ -4,6 +4,30 @@ import repository.*;
 import vo.*;
 
 public class EmployeeService {
+	public void insertEmployee(Employee paramEmployee) {
+		Connection conn = null;
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			EmployeeDao employeeDao = new EmployeeDao();
+			employeeDao.insertEmployee(conn, paramEmployee);
+			
+			conn.commit();
+		}catch(Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public Employee login(Employee paramEmployee) {
 		Connection conn = null;
 		Employee employee = new Employee();

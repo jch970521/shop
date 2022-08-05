@@ -10,7 +10,7 @@
 	
 	System.out.println(employeeId);
 	System.out.println(employeePw);
-
+	
 	if(employeeId==null || employeePw == null){
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
 		return;
@@ -18,12 +18,15 @@
 	EmployeeService loginEmployee = new EmployeeService();
 	Employee paramEmployee = new Employee();
 	
+	
 	paramEmployee.setEmployeeId(employeeId);
 	paramEmployee.setEmployeePass(employeePw);
-
+	
 	System.out.println(paramEmployee.getEmployeeId());
 	System.out.println(paramEmployee.getEmployeePass());
 	
+	
+	System.out.println(paramEmployee.getActive());
 	if ((paramEmployee = loginEmployee.login(paramEmployee))==null){
 	response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
 		

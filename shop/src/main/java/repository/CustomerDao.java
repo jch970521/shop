@@ -3,9 +3,38 @@ import java.sql.*;
 import vo.*;
 
 public class CustomerDao {
-		// 탈퇴
-		// CustomerService.removeCustomer(Customer paramCustomer)가 호출 
+	//회원가입
+	public int insertCustomer(Connection conn, Customer Customer) {
 	
+		PreparedStatement stmt = null;
+		String sql ="INSERT INTO customer( customer_id , customer_pass , customer_name , customer_address , customer_telephone , update_date , create_date ) VALUES ( ? , password(?) , ? , ? , ? , now() , now() )";
+		
+		int row = 0;
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, Customer.getCustomerId());
+			stmt.setString(2, Customer.getCustomerPass());
+			stmt.setString(3, Customer.getCustomerName());
+			stmt.setString(4, Customer.getCustomerAddress());
+			stmt.setString(5, Customer.getCustomerTelephone());
+			
+			row = stmt.executeUpdate();
+			
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		return row;
+	}
+	
+	
+	// 탈퇴
+	// CustomerService.removeCustomer(Customer paramCustomer)가 호출 
+		
 	public int deleteCustomer(Connection conn, Customer paramCustomer) {
 		// 동일한 conn
 		PreparedStatement stmt = null;

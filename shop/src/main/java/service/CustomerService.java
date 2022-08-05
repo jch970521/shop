@@ -5,6 +5,33 @@ import repository.*;
 import vo.*;
 
 public class CustomerService {
+	public void insertCustomer(Customer paramCustomer) {
+		Connection conn = null;
+				
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			CustomerDao customerDao = new CustomerDao();
+			customerDao.insertCustomer(conn, paramCustomer);
+			
+			conn.commit();
+		}catch(Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	
+	}
+	
 	public Customer login(Customer paramCustomer) {
 		Connection conn = null;
 		Customer customer= new Customer();
