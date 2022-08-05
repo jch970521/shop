@@ -38,7 +38,7 @@
 	session.setAttribute("id", paramEmployee.getEmployeeId()); // Object <-다형성 Integer <-오토박싱 int
 	session.setAttribute("name", paramEmployee.getEmployeeName());
 	session.setAttribute("user", "Employee");
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+	response.sendRedirect(request.getContextPath()+"/admin.index.jsp");
 	
 	}else{response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
 	

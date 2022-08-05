@@ -1,13 +1,70 @@
 package repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.*;
 
 import vo.*;
 
 public class EmployeeDao {
+	//마지막페이지
+	public int lastPage(Connection conn) throws Exception{
+		int lastPage = 0;
+		String sql = "SELECT COUNT(*) FROM employee"; // 갯수세기
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				lastPage = rs.getInt("count");
+			}
+		}finally {
+			if(rs!= null) {rs.close();}
+			if(stmt!= null) {stmt.close();}
+		}
+		
+		return lastPage;
+	}
+	
+	//사원리스트 출력
+	public List<Employee> selectEmployeeList(Connection conn ,final int rowPerPage , final int beginRow ) throws Exception {
+		List<Employee> employeeList = new ArrayList<>();
+		Employee employee = null;
+		String sql = "SELECT employee_id , employee_name , update_date , create_date , active FROM employee ORDER BY create_date DESC LIMIT ?,?;";
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			employeeList = new ArrayList<Employee>();
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
+
+			System.out.println("EmployeeDao selectEmployeeList stmt : " + stmt);
+			
+			rs= stmt.executeQuery();
+			while(rs.next()) {
+				employee = new Employee();
+				employee.setEmployeeId(rs.getString("employee_id"));
+				employee.setEmployeeName(rs.getString("employee_name"));
+				employee.setUpdateDate(rs.getString("update_date"));
+				employee.setCreateDate(rs.getString("create_date"));
+				employee.setActive(rs.getString("active"));
+				
+				employeeList.add(employee);
+				
+			}
+		}finally {
+			if(rs != null) { rs.close(); }
+			if(stmt != null) { stmt.close(); }
+		}
+				
+		return employeeList;
+	}
 	//회원가입
 	public int insertEmployee(Connection conn, Employee Employee) {
 		PreparedStatement stmt = null;
@@ -82,4 +139,5 @@ public class EmployeeDao {
 		}
 		return loginEmployee;
 	}
+
 }

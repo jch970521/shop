@@ -2,8 +2,11 @@
 <%@ page import = "vo.*" %>
 <%@ page import = "repository.*" %>
 <%
-	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
-	CustomerDao customerDao = new CustomerDao();	
+
+	Employee loginEmployee = (Employee)session.getAttribute("loginEmployee");
+	
+	EmployeeDao employeeDao = new EmployeeDao();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -32,7 +35,9 @@
 	
 	<tr>
 	<td>유저 name</td>
-	<td><%=session.getAttribute("name") %> <!--  로그인 이름 --></td>
+	<td><input type="hidden" <%=session.getAttribute("active") %>>
+	<%=session.getAttribute("name") %> <!--  로그인 이름 -->
+	</td>
 	</tr>
 </table>
 </fieldset>
@@ -40,6 +45,11 @@
 </form>
 <a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 <a href="<%=request.getContextPath()%>/<%=session.getAttribute("user")%>outIdForm.jsp">회원탈퇴</a>
+<a href="<%=request.getContextPath()%>/employeeList.jsp">사원 리스트</a>
+<a href="<%=request.getContextPath()%>">상품관리 리스트</a>
+<a href="<%=request.getContextPath()%>">고객관리 리스트</a>
+<a href="<%=request.getContextPath()%>">주문관리 리스트</a>
+<a href="<%=request.getContextPath()%>">공지사항 게시판</a>
 </div>
 </body>
 </html>
