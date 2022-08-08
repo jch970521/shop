@@ -2,6 +2,10 @@
 <%@ page import = "vo.*" %>
 <%@ page import = "repository.*" %>
 <%
+	if(session.getAttribute("id") == null || !(session.getAttribute("user").equals("Employee"))){
+		response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
+		return;
+	}
 
 	Employee loginEmployee = (Employee)session.getAttribute("loginEmployee");
 	
@@ -43,13 +47,17 @@
 </fieldset>
 	<h1 style="text-align:center" ><%=session.getAttribute("name")%>님 환영합니다.</h1>
 </form>
-<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+
+<ul> <!-- 상단메뉴 -->
+<li><a href="<%=request.getContextPath()%>/admin/employeeList.jsp">사원 리스트</a></li>			<!--  -->
+<li><a href="<%=request.getContextPath()%>/admin/adminGoodsList.jsp">상품관리 리스트</a></li>	<!-- 상품목록/등록/수정/삭제(주문이없는경우) -->
+<li><a href="<%=request.getContextPath()%>/admin/adminOrdersList.jsp">고객관리 리스트</a></li> 	<!-- 주문목록/수정  -->
+<li><a href="<%=request.getContextPath()%>/admin/adminCustomerList.jsp">주문관리 리스트</a></li> <!-- 고객목록/고객강제탈퇴/비밀번호수정(전달구현x) -->
+<li><a href="<%=request.getContextPath()%>">공지사항 게시판</a></li> <!-- 공지 CRUD -->
+</ul>
+
 <a href="<%=request.getContextPath()%>/<%=session.getAttribute("user")%>outIdForm.jsp">회원탈퇴</a>
-<a href="<%=request.getContextPath()%>/employeeList.jsp">사원 리스트</a>
-<a href="<%=request.getContextPath()%>">상품관리 리스트</a>
-<a href="<%=request.getContextPath()%>">고객관리 리스트</a>
-<a href="<%=request.getContextPath()%>">주문관리 리스트</a>
-<a href="<%=request.getContextPath()%>">공지사항 게시판</a>
+<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 </div>
 </body>
 </html>

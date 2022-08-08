@@ -2,14 +2,40 @@ package repository;
 
 import java.sql.*;
 import java.util.*;
-
 import vo.*;
 
 public class EmployeeDao {
+	//업데이트Active
+	public int updateEmployeeActive(Connection conn, Employee employee) throws Exception {
+		String sql = "UPDATE employee SET active=? WHERE employee_id=?";
+		PreparedStatement stmt = null;
+		int row = 0;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, employee.getActive());
+			stmt.setString(2, employee.getEmployeeId());
+			
+			row = stmt.executeUpdate();
+			
+		}catch(Exception e){
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		System.out.print("row : " + row);
+
+		return row;
+	}
+	
+	
 	//마지막페이지
-	public int lastPage(Connection conn) throws Exception{
+	public int CountEmployee(Connection conn) throws Exception{
 		int lastPage = 0;
-		String sql = "SELECT COUNT(*) FROM employee"; // 갯수세기
+		String sql = "SELECT COUNT(*) count FROM employee"; // 갯수세기
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -33,7 +59,7 @@ public class EmployeeDao {
 	public List<Employee> selectEmployeeList(Connection conn ,final int rowPerPage , final int beginRow ) throws Exception {
 		List<Employee> employeeList = new ArrayList<>();
 		Employee employee = null;
-		String sql = "SELECT employee_id , employee_name , update_date , create_date , active FROM employee ORDER BY create_date DESC LIMIT ?,?;";
+		String sql = "SELECT employee_id , employee_name , update_date , create_date , active FROM employee ORDER BY create_date DESC LIMIT ?,?";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
@@ -115,7 +141,7 @@ public class EmployeeDao {
 	
 	public Employee selectEmployeeByIdAndPw(Connection conn , Employee employee) throws Exception{
 		Employee loginEmployee = null;
-		String sql ="SELECT employee_id , employee_name , active FROM employee WHERE employee_id = ? AND employee_pass = PASSWORD(?) AND active = 'Y' ;";
+		String sql ="SELECT employee_id , employee_name , active FROM employee WHERE employee_id = ? AND employee_pass = PASSWORD(?) AND active = 'Y' ";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
@@ -139,5 +165,7 @@ public class EmployeeDao {
 		}
 		return loginEmployee;
 	}
+
+	
 
 }

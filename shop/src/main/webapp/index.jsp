@@ -2,6 +2,11 @@
 <%@ page import = "vo.*" %>
 <%@ page import = "repository.*" %>
 <%
+	if(session.getAttribute("id") == null || !(session.getAttribute("user").equals("Customer"))){
+		response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
+		return;
+	}
+
 	Customer loginCustomer = (Customer)session.getAttribute("loginCustomer");
 	CustomerDao customerDao = new CustomerDao();	
 %>
