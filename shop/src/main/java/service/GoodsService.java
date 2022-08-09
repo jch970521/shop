@@ -12,39 +12,42 @@ public class GoodsService {
 
 	private DBUtil dbUtil;
 	
-	public void addGoods(Goods goods, GoodsImg goodsImg) {
+	public int addGoods(Goods goods, GoodsImg goodsImg) {
+		int goodsNo = 0;
+		
 		Connection conn = null;
-
+		
 		try {
-			conn = new DBUtil().getConnection();
+			conn =  new DBUtil().getConnection();
 			conn.setAutoCommit(false);
 			
 			goodsDao = new GoodsDao();
 			goodsImgDao = new GoodsImgDao();
 			
-			int goodsNo = goodsDao.insertGoods(conn, goods); // goodsNo가 자동생성되어 DB에 입력됨.
+			goodsNo = goodsDao.insertGoods(conn, goods); // goodsNo가 AI로 자동생성되어 DB입력
+			System.out.println("goodsNo확인 " + goodsNo);
+			
 			if(goodsNo != 0) {
 				goodsImg.setGoodsNo(goodsNo);
-				if(goodsImgDao.insertGoodsImg(conn, goodsImg) == 0 ) {
-					throw new Exception(); // 이미지 입력 실패시 강제로 롤백시키기 위해서.(catch절로 이동하기위해서)
+				
+				if(goodsImgDao.insertGoodsImg(conn, goodsImg) == 0) {
+					throw new Exception();
 				}
 			}
-			goodsImgDao.insertGoodsImg(conn, goodsImg);
 			conn.commit();
-		}catch(Exception e){
+		}catch(Exception e) {
 			e.printStackTrace();
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		}try {
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return goodsNo;
 	}
 	
 	public Map<String, Object> getGoodsAndImgOne(int goodsNo) {

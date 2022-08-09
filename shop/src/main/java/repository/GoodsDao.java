@@ -9,16 +9,26 @@ public class GoodsDao {
 	// 반환값 int : key값 (jdbc api)
 	public int insertGoods(Connection conn, Goods goods) throws Exception {
 		int keyId = 0;
-		PreparedStatement stmt = conn.prepareStatement("INSERT INTO goods (goods_name , goods_price , update_date , create_date) VALUES( ?, ? , ? ,now(),now() ) ", Statement.RETURN_GENERATED_KEYS);
+		String sql = "INSERT INTO goods (goods_name , goods_price , sold_out , update_date , create_date) VALUES( ?, ? , ? ,now(),now() ) ";
+		PreparedStatement stmt = null;
 		// 1) insert가 실행
 		// 2) select last_ai_key from .. 
-		stmt.executeUpdate(); //성공한 row 의 수
-		
-		ResultSet rs =  stmt.getGeneratedKeys(); // select last_key
-		if(rs.next()) {
-			keyId = rs.getInt(1);
-		}
-		
+		ResultSet rs =  null; 
+		try {
+			stmt = conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, goods.getGoodsName());
+			stmt.setInt(2, goods.getGoodsPrice());
+			stmt.setString(3, goods.getSoldOut());
+			
+			stmt.executeUpdate(); // 성공한 수
+			
+			rs = stmt.getGeneratedKeys(); // select last_key
+			
+			if(rs.next()) {
+				keyId = rs.getInt(1);
+			}
+		}finally {
+
 		if(rs!=null) {
 			rs.close();
 		}
@@ -26,8 +36,11 @@ public class GoodsDao {
 			stmt.close();
 		}
 		
-		return keyId;
 	}
+	System.out.println("keyId확인 " + keyId);
+	return keyId;
+
+}
 	//
 	public Map<String, Object> selectGoodsAndImageOne(Connection conn , int goodsNo) throws SQLException {
 		Map<String,Object> map = new HashMap<String,Object>();

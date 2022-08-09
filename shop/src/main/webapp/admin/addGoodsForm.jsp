@@ -15,14 +15,19 @@
 		<tr>
 			<td>상품 가격</td>
 			<td><input type="text" name="goodsPrice"></td>
-		</tr>	
+		</tr>
 		<tr>
-			<td>상품 이미지 제목</td>
-			<td><input type="text" name="goodsImgName"></td>	
-		</tr>				
+			<td>품절 여부</td>
+			<td>
+					<select name="soldOut">
+							<option value="N">N</option>
+							<option value="Y">Y</option>
+					</select>
+			</td>
+		</tr>			
 		<tr>
 			<td>상품 이미지 파일</td>
-			<td><input type="file" name="goodsImgFile"></td>
+			<td><input type="file" name="imgFile"></td>
 		</tr>
 	</table>
 		<button type="submit">상품 등록하기</button>
