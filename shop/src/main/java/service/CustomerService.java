@@ -1,10 +1,89 @@
 package service;
 
 import java.sql.*;
+import java.util.*;
+
 import repository.*;
 import vo.*;
 
 public class CustomerService {
+	private CustomerDao customerDao;
+	private DBUtil dbUtil;
+	
+	public int lastPage(int rowPerPage) {
+		int lastPage = 0;
+		int totalCount =0;
+		
+		Connection conn = null;
+		this.dbUtil = new DBUtil();
+		this.customerDao = new CustomerDao();
+		
+		try {
+			conn = this.dbUtil.getConnection();
+			
+			totalCount = this.customerDao.CountCustomer(conn);
+			
+			lastPage = totalCount / rowPerPage ; //마지막페이지 구하기
+			
+			if(totalCount % rowPerPage !=0) {//나머지가 0이아닐떄 페이지1장추가
+				lastPage +=1;
+			}
+		}catch(Exception e) { // 오류잡기
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return lastPage;
+	}
+	
+	//리스트
+	public List<Customer> getCustomerList(int rowPerPage , int currentPage){
+		Connection conn = null;
+		List<Customer> list = null;
+		
+		int beginRow = (currentPage-1) * rowPerPage;
+		
+		try {
+			conn = new DBUtil().getConnection();
+			
+			conn.setAutoCommit(false);
+			
+			CustomerDao customerDao = new CustomerDao();
+			
+			list = customerDao.selectCustomerList(conn, rowPerPage, beginRow);
+			
+			conn.commit();
+		}catch(Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	//페이징
+	public List<Map<String, Object>> getCustomerGoodsListByPage(int rowPerPage, int currentPage){
+		
+		//customerDao 호출
+		
+		return null;
+	}
+	
+	////고객 추가
 	public void insertCustomer(Customer paramCustomer) {
 		Connection conn = null;
 				

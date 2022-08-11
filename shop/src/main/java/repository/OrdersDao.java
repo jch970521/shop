@@ -5,6 +5,32 @@ import java.util.*;
 import vo.*;
 
 public class OrdersDao {
+	//배송현황 수정
+	public int updateOrderState(Connection conn, Orders orderState) {
+		String sql = "UPDATE orders SET order_state = ? WHERE order_no = ?";
+		PreparedStatement stmt = null;
+		int row = 0;
+		
+		try {
+			stmt =conn.prepareStatement(sql);
+			stmt.setString(1, orderState.getOrderState());
+			stmt.setInt(2, orderState.getOrderNo());
+			
+			row = stmt.executeUpdate();
+			System.out.println("stmt 확인:" + stmt);
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		System.out.println("row확인 : " + row);
+		return row;
+	}
+	
+	
 	// 5-2 주문 상세 보기
 	public Map<String,Object> selectOrdersOne(Connection conn, int ordersNo) throws SQLException {
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -104,14 +130,46 @@ public class OrdersDao {
 	}
 	
 	// 2-1 ) 고객 한명의 주문 목록(관리자 , 고객)
-	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn, String customerId , int rowPerPage , int beginRow){
+	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn, String customerId , int rowPerPage , int beginRow) throws Exception{
 		List<Map<String,Object>> list = new ArrayList<>(); // 다형성 , 디커플링
+		Map<String,Object> map = new HashMap<String, Object>();
 		
-		String sql = "SELECT o.oredr_no , o.goods_no ,";
+		String sql = "SELECT o.oredr_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date ,g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no  WHERE customer_id = ? ORDER BY create_date DESC LIMIT ? , ?";
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1,beginRow);
+			stmt.setInt(2, rowPerPage);
+			
+			rs = stmt.executeQuery();
+			
+			map.put("orderNo", rs.getInt("o.order_no"));
+			map.put("customerId", rs.getString("o.customer_id"));
+			map.put("orderQuantity", rs.getInt("o.order_quantity"));
+			map.put("orderPrice", rs.getInt("o.order_price"));
+			map.put("orderAddress", rs.getString("o.order_address"));
+			map.put("orderState", rs.getString("o.order_state"));
+			map.put("updateDate", rs.getString("o.update_date"));
+			map.put("createDate", rs.getString("o.create_date"));
+			map.put("goodsNo", rs.getInt("g.goods_no"));
+			map.put("goodsName", rs.getString("g.goods_name"));
+			map.put("goodsPrice", rs.getInt("g.goods_price"));
+			
+			list.add(map);
+		}finally {
+			if(rs!=null) {rs.close();}
+			if(stmt!=null) {stmt.close();}
+		}
+		
+		/*
+		  	
 		/*
 		  SELECT 
-		  o. ,
-		  g. ,
+		  o.order_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date,
+		  g.goods_no , g.goods_name, g.goods_price
 		  FROM orders o INNER JOIN goods g
 		  ON o.goods_no = g.goods_no
 		  WHERE customer_id = ?
@@ -143,4 +201,6 @@ public class OrdersDao {
 		}
 		return totalCount;
 	}
+
+	
 }

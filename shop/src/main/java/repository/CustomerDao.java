@@ -1,8 +1,46 @@
 package repository;
 import java.sql.*;
+import java.util.*;
 import vo.*;
 
 public class CustomerDao {
+	//고객리스트 출력
+	public List<Customer> selectCustomerList(Connection conn, int rowPerPage , int beginRow) throws Exception{
+		List<Customer> customerList = new ArrayList<>();
+		Customer customer = null;
+		String sql = "SELECT customer_id , customer_name , customer_address , customer_telephone , update_date , create_date FROM customer ORDER BY create_date DESC LIMIT ?,? ";
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			customerList = new ArrayList<Customer>();
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
+			
+			System.out.println("CustomerDao selectCustomerList stmt " + stmt);
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				customer = new Customer();
+				customer.setCustomerId(rs.getString("customer_id"));
+				customer.setCustomerName(rs.getString("customer_name"));
+				customer.setCustomerAddress(rs.getString("customer_address"));
+				customer.setCustomerTelephone(rs.getString("customer_telephone"));
+				customer.setUpdateDate(rs.getString("update_date"));
+				customer.setCreateDate(rs.getString("create_date"));
+				
+				customerList.add(customer);
+			}
+		}finally {
+			if(rs !=null) { rs.close(); }
+			if(stmt != null) {stmt.close();}
+		}
+		return customerList;
+	}
+	
 	//회원가입
 	public int insertCustomer(Connection conn, Customer Customer) {
 	
@@ -83,6 +121,28 @@ public class CustomerDao {
 			if(stmt!= null) {stmt.close();}
 		}
 		return loginCustomer;
+	}
+
+	public int CountCustomer(Connection conn) throws Exception {
+		int lastPage = 0;
+		String sql = "SELECT COUNT(*) count FROM customer"; // 갯수세기
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			if(rs.next()) {
+				lastPage = rs.getInt("count");
+			}
+		}finally {
+			if(rs!= null) {rs.close();}
+			if(stmt!= null) {stmt.close();}
+		}
+		
+		return lastPage;
 	}
 	
 }

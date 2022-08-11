@@ -34,11 +34,11 @@
 <ul> <!-- 상단메뉴 -->
 <li><a href="<%=request.getContextPath()%>/admin/employeeList.jsp">사원 리스트</a></li>			<!--  -->
 <li><a href="<%=request.getContextPath()%>/admin/adminGoodsList.jsp">상품관리 리스트</a></li>	<!-- 상품목록/등록/수정/삭제(주문이없는경우) -->
-<li><a href="<%=request.getContextPath()%>/admin/adminOrdersList.jsp">고객관리 리스트</a></li> 	<!-- 주문목록/수정  -->
-<li><a href="<%=request.getContextPath()%>/admin/adminCustomerList.jsp">주문관리 리스트</a></li> <!-- 고객목록/고객강제탈퇴/비밀번호수정(전달구현x) -->
+<li><a href="<%=request.getContextPath()%>/admin/adminOrdersList.jsp">주문관리 리스트</a></li> 	<!-- 주문목록/수정  -->
+<li><a href="<%=request.getContextPath()%>/admin/adminCustomerList.jsp">고객관리 리스트</a></li> <!-- 고객목록/고객강제탈퇴/비밀번호수정(전달구현x) -->
 <li><a href="<%=request.getContextPath()%>">공지사항 게시판</a></li> <!-- 공지 CRUD -->
 </ul>
-	<h1>고객 관리</h1>
+	<h1>주문 관리</h1>
 		<table border="1">
 			<thead>
 				<tr>
@@ -58,13 +58,41 @@
 					for(Map<String,Object> map : list){
 				%>
 					<tr>
-						<td><%=map.get("orderNo")%></td>
+						<td><a href="<%=request.getContextPath()%>/admin/adminOrdersOne.jsp?order_no=<%=map.get("orderNo")%>"><%=map.get("orderNo")%></a></td>
 						<td><%=map.get("goodsNo")%></td>
-						<td><a href="<%=request.getContextPath()%>/admin/adminOrdersOne.jsp?order_no=<%=map.get("orderNo")%>"><%=map.get("customerId") %></a></td>
+						<td><%=map.get("customerId")%></td>
 						<td><%=map.get("orderQuantity")%></td>
 						<td><%=map.get("orderPrice")%></td>
 						<td><%=map.get("orderAddress")%></td>
-						<td><%=map.get("orderState")%></td>
+						<td>
+						<form action="<%=request.getContextPath()%>/admin/modifyorderStateAction.jsp" method="post">
+							<input type="hidden" name="orderNo" value="<%=map.get("orderNo")%>">
+						<select name="state">
+						<%
+							if(map.get("orderState").equals("orderCom")){
+						%>
+							<option value="orderCom" selected="selected">주문완료</option>
+							<option value="orderDelivery">배송중</option>
+							<option value="orderDelCom">배송완료</option>
+						<%	
+							} else if(map.get("orderState").equals("orderDelivery")){
+						%>
+							<option value="orderCom">주문완료</option>
+							<option value="orderDelivery" selected="selected" >배송중</option>
+							<option value="orderDelCom">배송완료</option>
+						<%	
+							} else {
+						%>
+							<option value="orderCom">주문완료</option>
+							<option value="orderDelivery">배송중</option>
+							<option value="orderDelCom"  selected="selected" >배송완료</option>
+						<%
+							}
+						%>
+						</select>
+						<button type="submit">주문상태 변경</button>
+						</form>
+						</td>
 						<td><%=map.get("updateDate")%></td>
 						<td><%=map.get("createDate")%></td>
 					</tr>

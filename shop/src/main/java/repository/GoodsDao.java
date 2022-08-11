@@ -5,6 +5,47 @@ import java.util.*;
 import java.sql.*;
 
 public class GoodsDao {
+	//고객상품리스트페이지에서사용
+	public List<Map<String, Object>> customerGoodsListByPage(Connection conn, int rowPerPage , int beginRow) throws Exception{
+		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		/*
+		  고객의 판매량수 많은것부터.
+  	 		SELECT g.goods_no goodsNo
+             , g.goods_name goodsName
+             , g.goods_price goodsPrice
+             , gi.filename filename
+       		FROM
+       					goods g LEFT JOIN (SELECT goods_no, SUM(order_quantity) sumNum
+                      	FROM orders
+                      	GROUP BY goods_no) t
+                      	ON g.goods_no = t.goods_no
+                         INNER JOIN goods_img gi
+                         ON g.goods_no = gi.goods_no
+       		ORDER BY IFNULL(t.sumNUm, 0) DESC	 
+		 */
+		
+		String sql = "";
+
+		
+		stmt = conn.prepareStatement(sql);
+		rs = stmt.executeQuery();
+		
+		while(rs.next()) {
+			Map<String,Object> map = new HashMap<String, Object>();
+			list.add(map);
+		}
+		if(rs!=null) {
+			rs.close();
+		}
+		if(stmt!=null) {
+			stmt.close();
+		}
+		
+		return list;
+	}
 	
 	// 반환값 int : key값 (jdbc api)
 	public int insertGoods(Connection conn, Goods goods) throws Exception {

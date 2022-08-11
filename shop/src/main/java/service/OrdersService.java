@@ -6,7 +6,43 @@ import vo.*;
 import java.sql.*;
 
 public class OrdersService {
+	//배송현황 수정하기
+	public int modifyOrderState(Orders orderState) {
+		Connection conn = null;
+		int state = 0;
+		
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			OrdersDao ordersDao = new OrdersDao();
+			state = ordersDao.updateOrderState(conn,orderState);
+		
+			System.out.println("배송현황 state" + state);
+		
+			if(state == 0) { // 예외처리하기
+				throw new Exception();
+			}
+			conn.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return state;
+	}
 	
+	
+	//orderNo
 	public Map<String , Object> getOrdersOne(int orderNo){
 		Map<String , Object> map =null;
 		Connection conn = null;
