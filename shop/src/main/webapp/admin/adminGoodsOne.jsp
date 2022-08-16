@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<th>상품번호</th>
-			<td><%=map.get("goodsNo")%></td>	
+			<td><input type="hidden" name="goods_no" value=<%=map.get("goodsNo")%>><%=map.get("goodsNo")%></td>	
 		</tr>
 		<tr>
 			<th>상품명</th>
@@ -67,6 +67,7 @@
 			<td><%=map.get("contentType")%></td>	
 		</tr>		
 	</table>
+	<a href="<%=request.getContextPath()%>/admin/GoodsUpdateForm.jsp">상품 수정하기</a>
 	<a href="<%=request.getContextPath()%>/admin/adminGoodsList.jsp">돌아가기</a>
 </body>
 </html>

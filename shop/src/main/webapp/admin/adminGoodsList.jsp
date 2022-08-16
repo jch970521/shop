@@ -47,7 +47,8 @@
 				<td>물건 가격</td>
 				<td>수정 날짜</td>				
 				<td>등록된 날짜</td>
-				<td>SOLD OUT</td>						
+				<td>SOLD OUT</td>
+				<td>상품 수정하기</td>
 			</tr>
 		</thead>
 	<tbody>
@@ -61,6 +62,7 @@
 				        <td><%=g.getCreateDate()%></td>
 				        <td><%=g.getUpdateDate()%></td>
 				        <td><%=g.getSoldOut()%></td>
+				        <td><a href="<%=request.getContextPath()%>/admin/GoodsUpdateForm.jsp?goods_no=<%=g.getGoodsNo()%>">상품수정하기</a></td>
 				  </tr>
 		<%
 				}
@@ -79,6 +81,7 @@
 <%		
 	}
 %>
+
 <a href="<%=request.getContextPath()%>/admin/addGoodsForm.jsp">상품추가</a>
 <a href="<%=request.getContextPath()%>/admin.index.jsp">돌아가기</a>
 

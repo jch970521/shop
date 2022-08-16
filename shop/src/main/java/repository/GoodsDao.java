@@ -5,14 +5,39 @@ import java.util.*;
 import java.sql.*;
 
 public class GoodsDao {
-	//고객상품리스트페이지에서사용
+	//��ǰ �����ϱ�
+	public int updateGoods(Connection conn, Goods goods) {
+		String sql = "UPDATE goods SET goods_name = ? , goods_price = ? , update_date = now() , sold_out = ? WHERE goods_no = ?";
+		PreparedStatement stmt = null;
+		
+		int row = 0;
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, goods.getGoodsName());
+			stmt.setInt(2, goods.getGoodsPrice());
+			stmt.setString(3, goods.getSoldOut());
+			
+			row = stmt.executeUpdate();
+			System.out.println("stmt Ȯ��" + stmt);
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		return row;
+	}
+	
+	//
 	public List<Map<String, Object>> customerGoodsListByPage(Connection conn, int rowPerPage , int beginRow) throws Exception{
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		/*
-		  고객의 판매량수 많은것부터.
+		 
   	 		SELECT g.goods_no goodsNo
              , g.goods_name goodsName
              , g.goods_price goodsPrice
@@ -47,12 +72,12 @@ public class GoodsDao {
 		return list;
 	}
 	
-	// 반환값 int : key값 (jdbc api)
+	// int : key(jdbc api)
 	public int insertGoods(Connection conn, Goods goods) throws Exception {
 		int keyId = 0;
 		String sql = "INSERT INTO goods (goods_name , goods_price , sold_out , update_date , create_date) VALUES( ?, ? , ? ,now(),now() ) ";
 		PreparedStatement stmt = null;
-		// 1) insert가 실행
+		// 1) insert
 		// 2) select last_ai_key from .. 
 		ResultSet rs =  null; 
 		try {
@@ -61,7 +86,7 @@ public class GoodsDao {
 			stmt.setInt(2, goods.getGoodsPrice());
 			stmt.setString(3, goods.getSoldOut());
 			
-			stmt.executeUpdate(); // 성공한 수
+			stmt.executeUpdate(); // 
 			
 			rs = stmt.getGeneratedKeys(); // select last_key
 			
@@ -78,7 +103,7 @@ public class GoodsDao {
 		}
 		
 	}
-	System.out.println("keyId확인 " + keyId);
+	System.out.println("keyId " + keyId);
 	return keyId;
 
 }
@@ -111,10 +136,10 @@ public class GoodsDao {
 		return map;
 }	
 	
-	//마지막페이지
+	
 	public int GoodsCount(Connection conn) throws Exception{
 		int totalCount = 0;
-		String sql = "SELECT COUNT(*) count FROM goods"; // 갯수세기
+		String sql = "SELECT COUNT(*) count FROM goods"; 
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -135,7 +160,7 @@ public class GoodsDao {
 		return totalCount;
 	}
 	
-	//물건리스트
+	
 	public List<Goods> selectGoodsListByPage(Connection conn, int rowPerPage , int beginRow) throws Exception{
 		List<Goods> list = new ArrayList<Goods>();
 		Goods goods = null;
@@ -149,7 +174,7 @@ public class GoodsDao {
 			stmt.setInt(1, beginRow);
 			stmt.setInt(2, rowPerPage);
 			
-			System.out.println("stmt" + stmt );//stmt확인
+			System.out.println("stmt" + stmt );//stmt
 			
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -161,7 +186,7 @@ public class GoodsDao {
 				goods.setCreateDate(rs.getString("create_date"));
 				goods.setSoldOut(rs.getString("sold_out"));
 				
-				list.add(goods); // list에 값 넣기
+				list.add(goods); // list
 			}
 		}finally {
 			if(rs !=null) {rs.close();}

@@ -114,5 +114,6 @@
 		<%		
 			}
 %>
+<a href="<%=request.getContextPath()%>/admin.index.jsp">돌아가기</a>
 </body>
 </html>

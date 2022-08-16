@@ -12,6 +12,39 @@ public class GoodsService {
 
 	private DBUtil dbUtil;
 	
+	//goods 수정하기
+	public int updateGoodsOne(Goods goods) {
+		Connection conn = null;
+		int row = 0;
+		
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			GoodsDao goodsDao = new GoodsDao();
+			row = goodsDao.updateGoods(conn, goods);
+			
+			System.out.println("row 확인 " + row);
+			
+			conn.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+		return row;
+	}
+	
+	//
 	public int addGoods(Goods goods, GoodsImg goodsImg) {
 		int goodsNo = 0;
 		
@@ -24,8 +57,8 @@ public class GoodsService {
 			goodsDao = new GoodsDao();
 			goodsImgDao = new GoodsImgDao();
 			
-			goodsNo = goodsDao.insertGoods(conn, goods); // goodsNo가 AI로 자동생성되어 DB입력
-			System.out.println("goodsNo확인 " + goodsNo);
+			goodsNo = goodsDao.insertGoods(conn, goods); // goodsNo
+			System.out.println("goodsNo " + goodsNo);
 			
 			if(goodsNo != 0) {
 				goodsImg.setGoodsNo(goodsNo);
@@ -92,9 +125,9 @@ public class GoodsService {
 		try {
 			conn = new DBUtil().getConnection();
 			totalCount = goodsDao.GoodsCount(conn);
-			lastPage = totalCount / rowPerPage; // 마지막페이지 구하기
+			lastPage = totalCount / rowPerPage; 
 			
-			if(totalCount % rowPerPage != 0) {//나머지가 0이아닐떄 페이지1장추가
+			if(totalCount % rowPerPage != 0) {
 				lastPage +=1; 
 			}
 		}catch(Exception e) {
@@ -120,11 +153,11 @@ public class GoodsService {
 		try {
 			conn = this.dbUtil.getConnection();
 			
-			System.out.println("conn" + conn);//conn확인
+			System.out.println("conn" + conn);//conn
 			
 			list = this.goodsDao.selectGoodsListByPage(conn, rowPerPage, beginRow);
 			
-			System.out.println("list" + list); // list확인
+			System.out.println("list" + list); // list
 			
 		}catch(Exception e) {
 			e.printStackTrace();
