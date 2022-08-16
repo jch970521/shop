@@ -50,6 +50,7 @@
 					<td>수정날짜</td>
 					<td>가입날짜</td>
 					<td>탈퇴</td>
+					<td>비밀번호수정</td>
 				</tr>
 			</thead>
 <tbody>
@@ -67,6 +68,12 @@
 				<form action="<%=request.getContextPath()%>/deleteCustomerAction.jsp" method="post">
 				<input type="hidden" name="customer_id" value="<%=c.getCustomerId()%>">
 				<button type="submit">탈퇴</button>
+				</form>
+			</td>
+			<td>
+				<form action="<%=request.getContextPath()%>/updateCustomerPwForm.jsp" method="post">
+				<input type="hidden" name="customer_id" value="<%=c.getCustomerId()%>">
+				<button type="submit">비밀번호 수정</button>
 				</form>
 			</td>
 	<%

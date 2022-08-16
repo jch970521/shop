@@ -5,7 +5,7 @@ import java.util.*;
 import vo.*;
 
 public class OrdersDao {
-	//배송현황 수정
+	
 	public int updateOrderState(Connection conn, Orders orderState) {
 		String sql = "UPDATE orders SET order_state = ? WHERE order_no = ?";
 		PreparedStatement stmt = null;
@@ -17,7 +17,7 @@ public class OrdersDao {
 			stmt.setInt(2, orderState.getOrderNo());
 			
 			row = stmt.executeUpdate();
-			System.out.println("stmt 확인:" + stmt);
+			System.out.println("stmt " + stmt);
 		}catch(Exception e) {
 			try {
 				stmt.close();
@@ -26,12 +26,12 @@ public class OrdersDao {
 			}
 		}
 		
-		System.out.println("row확인 : " + row);
+		System.out.println("row : " + row);
 		return row;
 	}
 	
 	
-	// 5-2 주문 상세 보기
+	// 5-2 
 	public Map<String,Object> selectOrdersOne(Connection conn, int ordersNo) throws SQLException {
 		Map<String,Object> map = new HashMap<String,Object>();
 		
@@ -59,7 +59,7 @@ public class OrdersDao {
 			map.put("customerTelephone", rs.getString("c.customer_telephone"));
 			
 		}
-		System.out.println("map 확인 " + map);
+		System.out.println("map  " + map);
 		/*
 		  SELECT
 		  	o. ,
@@ -76,9 +76,9 @@ public class OrdersDao {
 		return map;
 	}
 	
-	// 5-1 전체 주문 목록 ( 관리자 )
+	// 5-1 
 	public List<Map<String,Object>> selectOrdersList(Connection conn, int rowPerPage , int beginRow ) throws Exception{
-			List<Map<String,Object>> list = new ArrayList<>(); // 다형성 , 디커플링
+			List<Map<String,Object>> list = new ArrayList<>(); 
 			Map<String,Object> map = new HashMap<>();
 			
 			String sql = "SELECT o.order_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date , g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no ORDER BY create_date DESC LIMIT ? , ?";
@@ -91,7 +91,7 @@ public class OrdersDao {
 				stmt.setInt(1, beginRow);
 				stmt.setInt(2, rowPerPage);
 				
-				System.out.println("주문목록 stmt " + stmt); //확인
+				System.out.println("stmt " + stmt); 
 				
 				rs = stmt.executeQuery();
 				
@@ -110,8 +110,7 @@ public class OrdersDao {
 					
 					list.add(map);
 				}
-				System.out.println("리스트 확인 "+ list);
-				System.out.println("맵 확인" + map);
+			
 			}finally {
 				if(rs !=null) {rs.close();}
 				if(stmt != null) {stmt.close();}
@@ -129,9 +128,9 @@ public class OrdersDao {
 			return list;
 	}
 	
-	// 2-1 ) 고객 한명의 주문 목록(관리자 , 고객)
+
 	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn, String customerId , int rowPerPage , int beginRow) throws Exception{
-		List<Map<String,Object>> list = new ArrayList<>(); // 다형성 , 디커플링
+		List<Map<String,Object>> list = new ArrayList<>(); 
 		Map<String,Object> map = new HashMap<String, Object>();
 		
 		String sql = "SELECT o.oredr_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date ,g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no  WHERE customer_id = ? ORDER BY create_date DESC LIMIT ? , ?";
@@ -180,10 +179,10 @@ public class OrdersDao {
 		return list;
 	}
 
-	//페이지
+
 	public int OrdersCount(Connection conn) throws Exception {
 		int totalCount = 0;
-		String sql = "SELECT COUNT(*) FROM orders"; // 개수세기
+		String sql = "SELECT COUNT(*) FROM orders"; 
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

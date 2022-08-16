@@ -9,6 +9,34 @@ import vo.*;
 public class CustomerService {
 	private CustomerDao customerDao;
 	private DBUtil dbUtil;
+	//ºñ¹Ð¹øÈ£ ¼öÁ¤
+	public int updateCustomerPw(Customer customer) {
+		Connection conn = null;
+		int row = 0;
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			CustomerDao customerDao = new CustomerDao();
+			customerDao.updateCustomerPw(conn, customer);
+			
+			conn.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+		return row;
+	}
 	
 	//°­Á¦Å»Åð
 	public void deleteCustomerId(Customer customer) {

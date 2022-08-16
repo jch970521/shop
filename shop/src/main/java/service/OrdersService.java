@@ -6,7 +6,7 @@ import vo.*;
 import java.sql.*;
 
 public class OrdersService {
-	//배송현황 수정하기
+	
 	public int modifyOrderState(Orders orderState) {
 		Connection conn = null;
 		int state = 0;
@@ -18,9 +18,9 @@ public class OrdersService {
 			OrdersDao ordersDao = new OrdersDao();
 			state = ordersDao.updateOrderState(conn,orderState);
 		
-			System.out.println("배송현황 state" + state);
+			System.out.println("state" + state);
 		
-			if(state == 0) { // 예외처리하기
+			if(state == 0) { // 
 				throw new Exception();
 			}
 			conn.commit();
@@ -55,7 +55,7 @@ public class OrdersService {
 			map = ordersDao.selectOrdersOne(conn, orderNo);
 			
 			if(map==null) {
-				throw new Exception(); // map이 null이면 던지기
+				throw new Exception(); // 
 			}
 			conn.commit();
 		}catch(Exception e) {
@@ -116,10 +116,10 @@ public class OrdersService {
 		try {
 			conn = DBUtil.getConnection();
 			
-			System.out.println("conn 확인" + conn);
+			System.out.println("conn" + conn);
 			list = ordersDao.selectOrdersList(conn, rowPerPage, beginRow);
 			
-			System.out.println("list 확인" + list);
+			System.out.println("list" + list);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

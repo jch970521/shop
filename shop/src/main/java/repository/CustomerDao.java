@@ -4,7 +4,31 @@ import java.util.*;
 import vo.*;
 
 public class CustomerDao {
-	// 강제탈퇴
+	
+	// 비밀번호 수정(관리자 측에서 수정)
+	public int updateCustomerPw(Connection conn, Customer customer) {
+		String sql = "UPDATE customer SET customer_pass = password(?) WHERE customer_id = ?";
+		PreparedStatement stmt = null;
+		
+		int row = 0;
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, customer.getCustomerPass());
+			stmt.setString(2, customer.getCustomerId());
+		
+			row = stmt.executeUpdate();
+			System.out.println("stmt 확인" + stmt);
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		System.out.println("row 확인" + row);
+		return row;
+	}
+	// 강제탈퇴 (관리자측에서 탈퇴)
 	public int deleteCustomerId(Connection conn, Customer customer) {
 		String sql = "DELETE FROM customer WHERE customer_id = ?";
 		
