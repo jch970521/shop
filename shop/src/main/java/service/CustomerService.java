@@ -10,6 +10,39 @@ public class CustomerService {
 	private CustomerDao customerDao;
 	private DBUtil dbUtil;
 	
+	//����Ż��
+	public void deleteCustomerId(Customer customer) {
+		Connection conn = null;
+		
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			CustomerDao customerDao = new CustomerDao();
+			customerDao.deleteCustomerId(conn, customer);
+			
+			OutIdDao OutIdDao = new OutIdDao();
+			OutIdDao.insertOutId(conn, customer.getCustomerId());
+			
+			System.out.println("customer " + customer);
+			
+			conn.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			 try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	public int lastPage(int rowPerPage) {
 		int lastPage = 0;
 		int totalCount =0;
@@ -23,12 +56,12 @@ public class CustomerService {
 			
 			totalCount = this.customerDao.CountCustomer(conn);
 			
-			lastPage = totalCount / rowPerPage ; //마지막페이지 구하기
+			lastPage = totalCount / rowPerPage ;
 			
-			if(totalCount % rowPerPage !=0) {//나머지가 0이아닐떄 페이지1장추가
+			if(totalCount % rowPerPage !=0) {
 				lastPage +=1;
 			}
-		}catch(Exception e) { // 오류잡기
+		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			try {
@@ -41,7 +74,7 @@ public class CustomerService {
 		return lastPage;
 	}
 	
-	//리스트
+
 	public List<Customer> getCustomerList(int rowPerPage , int currentPage){
 		Connection conn = null;
 		List<Customer> list = null;
@@ -75,15 +108,15 @@ public class CustomerService {
 		return list;
 	}
 	
-	//페이징
+
 	public List<Map<String, Object>> getCustomerGoodsListByPage(int rowPerPage, int currentPage){
 		
-		//customerDao 호출
+
 		
 		return null;
 	}
 	
-	////고객 추가
+
 	public void insertCustomer(Customer paramCustomer) {
 		Connection conn = null;
 				
@@ -141,7 +174,7 @@ public class CustomerService {
 			Connection conn = null;
 			try {
 				conn = new DBUtil().getConnection();
-				conn.setAutoCommit(false); // executeUpdate()실행시 자동 커밋을 막음.
+				conn.setAutoCommit(false); 
 				
 				CustomerDao customerDao = new CustomerDao();
 				customerDao.deleteCustomer(conn, paramCustomer);
@@ -151,7 +184,7 @@ public class CustomerService {
 				
 				conn.commit();
 			} catch(Exception e) {
-				e.printStackTrace(); // 콘솔에 예외메세지 출력해주는거(무슨예외인지 알 수 있음)
+				e.printStackTrace();
 				try {
 					conn.rollback();
 				} catch (SQLException e1) {

@@ -5,7 +5,7 @@ import java.util.*;
 import vo.*;
 
 public class EmployeeDao {
-	//업데이트Active
+	//Active
 	public int updateEmployeeActive(Connection conn, Employee employee) throws Exception {
 		String sql = "UPDATE employee SET active=? WHERE employee_id=?";
 		PreparedStatement stmt = null;
@@ -32,10 +32,9 @@ public class EmployeeDao {
 	}
 	
 	
-	//마지막페이지
 	public int CountEmployee(Connection conn) throws Exception{
 		int lastPage = 0;
-		String sql = "SELECT COUNT(*) count FROM employee"; // 갯수세기
+		String sql = "SELECT COUNT(*) count FROM employee"; 
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -55,7 +54,6 @@ public class EmployeeDao {
 		return lastPage;
 	}
 	
-	//사원리스트 출력
 	public List<Employee> selectEmployeeList(Connection conn ,final int rowPerPage , final int beginRow ) throws Exception {
 		List<Employee> employeeList = new ArrayList<>();
 		Employee employee = null;
@@ -91,7 +89,8 @@ public class EmployeeDao {
 				
 		return employeeList;
 	}
-	//회원가입
+
+	
 	public int insertEmployee(Connection conn, Employee Employee) {
 		PreparedStatement stmt = null;
 		String sql = "INSERT INTO employee ( employee_id , employee_pass , employee_name , update_date , create_date) VALUES ( ? , password(?) , ? , now() , now() )";
@@ -116,7 +115,7 @@ public class EmployeeDao {
 	}
 	
 	public int deleteEmployee(Connection conn, Employee paramEmployee) {
-		// 동일한 conn
+
 		PreparedStatement stmt = null;
 		
 		String sql = "DELETE FROM employee WHERE employee_id =? AND employee_pass =password(?)";

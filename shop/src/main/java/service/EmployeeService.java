@@ -9,7 +9,7 @@ public class EmployeeService {
 	private DBUtil dbUtil;
 	private EmployeeDao employeeDao;
 
-	//active값 수정하기
+	//active
 	public int modifyEmployeeActive(Employee employeeActive) {
 		
 		Connection conn = null;
@@ -24,7 +24,7 @@ public class EmployeeService {
 			
 			System.out.print("active" + active);
 		
-			if(active == 0) { // active가 0이면 예외처리 
+			if(active == 0) { // active
 				throw new Exception();
 			}
 			conn.commit();
@@ -59,12 +59,12 @@ public class EmployeeService {
 			
 			totalCount = this.employeeDao.CountEmployee(conn);
 			
-			lastPage = totalCount / rowPerPage ; //마지막페이지 구하기
+			lastPage = totalCount / rowPerPage ; 
 			
-			if(totalCount % rowPerPage !=0) {//나머지가 0이아닐떄 페이지1장추가
+			if(totalCount % rowPerPage !=0) {
 				lastPage +=1;
 			}
-		}catch(Exception e) { // 오류잡기
+		}catch(Exception e) { 
 			e.printStackTrace();
 		}finally {
 			try {

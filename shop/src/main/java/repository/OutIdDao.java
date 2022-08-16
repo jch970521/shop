@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import vo.*;
 
 public class OutIdDao {
-	// 탈퇴 회원의 아이디를 입력
-	// CustomerService.removeCustomer(Customer paramCustomer)가 호출 
+	
+	// CustomerService.removeCustomer(Customer paramCustomer)
 	public int insertOutId(Connection conn, String customerId) {
-		// 동일한 conn
+		// conn
 		conn = null;
 		PreparedStatement stmt = null;
 		int row =0;
