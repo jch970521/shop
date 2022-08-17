@@ -4,8 +4,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    .form_contain {
+        margin: 200px auto 0px;
+        text-align: center;
+    }
+    .form_contain form {
+        text-align: center;
+    }
+
+    .form_contain form table{
+        text-align: center;
+        margin: 0px auto;
+    }
+</style>
 </head>
 <body>
+<div class="form_contain">
 	<!--  id ck form -->
 	<form action="<%=request.getContextPath()%>/employeeCheckAction.jsp" method="post">
 		<div>
@@ -39,6 +58,8 @@
 			</tr>
 		</table>
 		<button type="submit">회원가입하기</button>
+		<a href="<%=request.getContextPath()%>/admin.index.jsp">돌아가기</a>
 	</form>
+</div>
 </body>
 </html>
