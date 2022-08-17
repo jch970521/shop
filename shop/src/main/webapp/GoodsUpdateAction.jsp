@@ -15,16 +15,15 @@
 	int goodsNo = Integer.parseInt(request.getParameter("goods_no")); 
 	String goodsName = request.getParameter("goods_name");
 	int goodsPrice = Integer.parseInt(request.getParameter("goods_price"));
-	String updateDate = request.getParameter("update_date");
-	String createDate = request.getParameter("create_date");
 	String soldOut = request.getParameter("sold_out");
+	String updateDate = request.getParameter("update_date");
 	
 	Goods goods = new Goods();
 	goods.setGoodsNo(goodsNo);
 	goods.setGoodsName(goodsName);
 	goods.setGoodsPrice(goodsPrice);
 	goods.setUpdateDate(updateDate);
-	goods.setCreateDate(createDate);
+	goods.getCreateDate();
 	goods.setSoldOut(soldOut);
 	
 	GoodsService service = new GoodsService();

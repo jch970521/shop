@@ -24,7 +24,7 @@ public class GoodsService {
 			GoodsDao goodsDao = new GoodsDao();
 			row = goodsDao.updateGoods(conn, goods);
 			
-			System.out.println("row 확인 " + row);
+			System.out.println("goods row 확인 " + row);
 			
 			conn.commit();
 		}catch(Exception e) {

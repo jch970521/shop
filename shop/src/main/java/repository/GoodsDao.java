@@ -16,7 +16,7 @@ public class GoodsDao {
 			stmt.setString(1, goods.getGoodsName());
 			stmt.setInt(2, goods.getGoodsPrice());
 			stmt.setString(3, goods.getSoldOut());
-			
+			stmt.setInt(4, goods.getGoodsNo());
 			row = stmt.executeUpdate();
 			System.out.println("stmt »Æ¿Œ" + stmt);
 		}catch(Exception e) {

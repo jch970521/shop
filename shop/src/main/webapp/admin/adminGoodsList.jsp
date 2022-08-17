@@ -45,8 +45,8 @@
 				<td>물건 번호</td>
 				<td>물건 이름</td>
 				<td>물건 가격</td>
-				<td>수정 날짜</td>				
-				<td>등록된 날짜</td>
+				<td>등록된 날짜</td>				
+				<td>수정된 날짜</td>
 				<td>SOLD OUT</td>
 				<td>상품 수정하기</td>
 			</tr>

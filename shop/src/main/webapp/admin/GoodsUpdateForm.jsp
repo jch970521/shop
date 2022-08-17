@@ -43,14 +43,7 @@
 			<th>상품가격</th>
 			<td><input type="text" name="goods_price" value="<%=map.get("goodsPrice")%>"></td>	
 		</tr>
-		<tr>
-			<th>상품등록날짜</th>
-			<td><input type="text" name="create_date" value="<%=map.get("createDate")%>" readonly></td>	
-		</tr>
-		<tr>
-			<th>상품수정날짜</th>
-			<td><input type="text" name="update_date" value="<%=map.get("updateDate")%>" readonly></td>	
-		</tr>
+		
 		<tr>
 			<th>상품품절여부</th>
 			<td>
