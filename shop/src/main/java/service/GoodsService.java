@@ -44,7 +44,7 @@ public class GoodsService {
 		return row;
 	}
 	
-	//
+	//goods 추가
 	public int addGoods(Goods goods, GoodsImg goodsImg) {
 		int goodsNo = 0;
 		
@@ -83,6 +83,7 @@ public class GoodsService {
 		return goodsNo;
 	}
 	
+	//이미지 & 상세내용 보기
 	public Map<String, Object> getGoodsAndImgOne(int goodsNo) {
 		Map<String , Object> map =null;
 		Connection conn = null;
@@ -114,7 +115,7 @@ public class GoodsService {
 		return map;
 		
 	}
-	
+	//lastPage
 	public int lastPage(int rowPerPage){
 		int lastPage = 0;
 		int totalCount = 0;
@@ -141,7 +142,7 @@ public class GoodsService {
 		}
 		return lastPage;
 	}
-	
+	//페이징
 	public List<Goods> getGoodsListByPage(final int rowPerPage , final int currentPage){
 		List<Goods> list = null;
 		Connection conn = null;
