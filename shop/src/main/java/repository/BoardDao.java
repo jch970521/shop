@@ -10,6 +10,30 @@ import java.util.List;
 import vo.Board;
 
 public class BoardDao {
+	//글 수정
+	public int updateBoard(Connection conn, Board board) {
+		String sql ="UPDATE board SET board_title = ? , board_content = ? WHERE board_no = ?";
+		PreparedStatement stmt = null;
+		int row = 0;
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, board.getBoardTitle());
+			stmt.setString(2, board.getBoardContent());
+			stmt.setInt(3, board.getBoardNo());
+			
+			row = stmt.executeUpdate();
+			System.out.println("update board stmt 확인 : " + stmt);
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		System.out.println("update row 확인 : "  + row );
+		return row;
+	}
+	
 	//글 삭제
 	public int deleteBoard(Connection conn, int boardNo) {
 		String sql = "DELETE FROM board WHERE board_no = ? ";
@@ -112,6 +136,8 @@ public class BoardDao {
 		
 		return list;
 	}
+
+	
 
 
 	

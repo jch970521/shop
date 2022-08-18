@@ -8,6 +8,35 @@ import java.sql.*;
 public class BoardService {
 	private BoardDao boardDao;
 	private DBUtil dbUtil;
+	//글 수정
+	public int updateBoard(Board board) {
+		Connection conn = null;
+		int row=0;
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.updateBoard(conn, board);
+			
+			conn.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return row;
+	}
+	
 	//글삭제
 	public void deleteBoard(int boardNo) {
 		Connection conn = null;

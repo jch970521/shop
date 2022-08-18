@@ -27,11 +27,13 @@
 	<table border="1">
 		<tr>
 			<td>번호</td>
-			<td><%=board.getBoardNo()%></td>
+			<td>
+			<input type="hidden" name="board_no" value="<%=board.getBoardNo()%>">
+			<%=board.getBoardNo()%></td>
 		</tr>
 		<tr>
 			<td>제목</td>
-			<td><input type="text" value="<%=board.getBoardTitle()%>"></td>
+			<td><input type="text" name="board_title" value="<%=board.getBoardTitle()%>"></td>
 		</tr>
 		<tr>
 			<td>ID</td>
@@ -39,7 +41,7 @@
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td><textarea rows="5" cols="80" name="boardContent"><%=board.getBoardContent()%></textarea></td>
+			<td><textarea rows="5" cols="80" name="board_content"><%=board.getBoardContent()%></textarea></td>
 		</tr>
 		<tr>
 			<td>작성날짜</td>
