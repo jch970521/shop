@@ -50,9 +50,6 @@
 	<button type="submit">글 수정하기</button>
 </form>
 
-<form action="<%=request.getContextPath()%>/Board/deleteBoardAction.jsp?board_no=<%=board.getBoardNo()%>" method="post">
-	<button type="submit">글 삭제하기</button>
-</form>
 </div>
 <a href="<%=request.getContextPath()%>/Board/EmployeeBoardList.jsp">돌아가기</a>
 

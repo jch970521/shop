@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="vo.*" %>
+<%@ page import="repository.*" %>
+<%@ page import="service.*" %>
+<%
 
-</body>
-</html>
+	if(session.getAttribute("id") == null || !(session.getAttribute("user").equals("Employee"))){
+		response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
+		return;
+	}//로그인체크
+
+%>

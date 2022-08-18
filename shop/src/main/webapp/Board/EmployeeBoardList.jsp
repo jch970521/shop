@@ -51,6 +51,7 @@
 					<td>제목</td>
 					<td>작성자</td>
 					<td>작성날짜</td>
+					<td>게시글 삭제</td>
 				</tr>
 			</thead>
 		<tbody>
@@ -62,6 +63,12 @@
 				<td><a href="<%=request.getContextPath()%>/Board/BoardOne.jsp?board_no=<%=b.getBoardNo()%>"><%=b.getBoardTitle() %></a></td>
 				<td><%=b.getBoardWriter() %></td>
 				<td><%=b.getCreateDate() %></td>
+				<td>
+				<form action="<%=request.getContextPath()%>/Board/deleteBoardAction.jsp" method="post">
+				<input type="hidden" name="board_no" value="<%=b.getBoardNo()%>">
+				<button type="submit">삭제</button>
+				</form>
+				</td>
 			</tr>
 		<%
 			}

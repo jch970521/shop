@@ -8,7 +8,38 @@ import java.sql.*;
 public class BoardService {
 	private BoardDao boardDao;
 	private DBUtil dbUtil;
+	//글삭제
+	public void deleteBoard(int boardNo) {
+		Connection conn = null;
+		
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.deleteBoard(conn, boardNo);
+			
+			System.out.println("boardNo 값 확인 " + boardNo);
+			
+			conn.commit();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
+	//상세보기
 	public Board getBoardOne(int boardno) {
 		Board board = null;
 		Connection conn = null;

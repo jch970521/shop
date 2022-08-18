@@ -3,12 +3,34 @@ package repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import vo.Board;
 
 public class BoardDao {
+	//글 삭제
+	public int deleteBoard(Connection conn, int boardNo) {
+		String sql = "DELETE FROM board WHERE board_no = ? ";
+		
+		PreparedStatement stmt = null;
+		
+		int row = 0;
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, boardNo);
+			row = stmt.executeUpdate();
+			
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return row;
+	}
 	
 	//상세보기
 	public Board selectBoardOne(Connection conn, int boardNo) throws Exception{
@@ -90,6 +112,8 @@ public class BoardDao {
 		
 		return list;
 	}
+
+
 	
 	
 }
