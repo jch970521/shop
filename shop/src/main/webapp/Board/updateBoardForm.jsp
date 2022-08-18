@@ -7,7 +7,7 @@
 <%
 		request.setCharacterEncoding("UTF-8");
 		
-		if(session.getAttribute("id") == null || !(session.getAttribute("user").equals("Employee")) &&session.getAttribute("active")=="Y"){
+		if(session.getAttribute("id") == null  || !(session.getAttribute("user").equals("Employee")) &&session.getAttribute("active")=="Y"){
 			response.sendRedirect(request.getContextPath() + "/admin.index.jsp");
 			return;
 		}// 정보가 맞지않으면 admin.index로
@@ -50,5 +50,18 @@
 	</table>
 	<button type="submit"> 수정하기 </button>
 </form>
+
+<!-- 접속한 session을 판단해서 고객 / 관리자 나누기  -->
+<%
+if(session.getAttribute("user").equals("Employee")){
+%>
+<a href="<%=request.getContextPath()%>/Board/EmployeeBoardList.jsp">돌아가기</a>
+<% 
+}else{
+%>
+<a href="<%=request.getContextPath()%>/Board/BoardList.jsp">돌아가기</a>
+<%
+}
+%>
 </body>
 </html>

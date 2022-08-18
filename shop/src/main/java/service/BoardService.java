@@ -1,6 +1,9 @@
 package service;
 
 import java.util.*;
+
+import javax.swing.plaf.basic.BasicOptionPaneUI;
+
 import repository.*;
 import vo.*;
 import java.sql.*;
@@ -8,6 +11,33 @@ import java.sql.*;
 public class BoardService {
 	private BoardDao boardDao;
 	private DBUtil dbUtil;
+	//글 작성
+	public int insertBoard(Board board) {
+		Connection conn = null;
+		int row = 0;
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.insertBoard(conn, board);
+			conn.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return row;
+	}
 	//글 수정
 	public int updateBoard(Board board) {
 		Connection conn = null;

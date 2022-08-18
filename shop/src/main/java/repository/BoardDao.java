@@ -10,6 +10,31 @@ import java.util.List;
 import vo.Board;
 
 public class BoardDao {
+	//글 작성
+	public int insertBoard(Connection conn, Board board) {
+		String sql = "INSERT INTO board(board_title,board_writer,board_content,create_date) VALUES (? , ? , ? , now() )";
+		PreparedStatement stmt = null;
+		int row =0;
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, board.getBoardTitle());
+			stmt.setString(2, board.getBoardWriter());
+			stmt.setString(3, board.getBoardContent());
+			
+			row = stmt.executeUpdate();
+			System.out.println("board Insert stmt " + stmt);
+			
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		System.out.println("insert row 확인 : " + row);
+		return row;
+	}
+	
 	//글 수정
 	public int updateBoard(Connection conn, Board board) {
 		String sql ="UPDATE board SET board_title = ? , board_content = ? WHERE board_no = ?";
