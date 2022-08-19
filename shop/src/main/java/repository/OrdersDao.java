@@ -1,11 +1,19 @@
 package repository;
 
-import java.sql.*;
-import java.util.*;
-import vo.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import vo.Orders;
 
 public class OrdersDao {
 	
+
 	public int updateOrderState(Connection conn, Orders orderState) {
 		String sql = "UPDATE orders SET order_state = ? WHERE order_no = ?";
 		PreparedStatement stmt = null;
@@ -128,13 +136,13 @@ public class OrdersDao {
 			return list;
 	}
 	
-
-	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn, String customerId , int rowPerPage , int beginRow) throws Exception{
+	//고객 id로 주문현황 확인.
+	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn,int rowPerPage , int beginRow) throws Exception{
 		List<Map<String,Object>> list = new ArrayList<>(); 
 		Map<String,Object> map = new HashMap<String, Object>();
-		
-		String sql = "SELECT o.oredr_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date ,g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no  WHERE customer_id = ? ORDER BY create_date DESC LIMIT ? , ?";
-		
+		//String sql = "SELECT o.order_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date ,g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no  WHERE customer_id = ? ORDER BY create_date DESC LIMIT ? , ?";
+		String sql = "SELECT o.order_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date , g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no ORDER BY create_date DESC LIMIT ? , ?";
+
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
@@ -200,6 +208,9 @@ public class OrdersDao {
 		}
 		return totalCount;
 	}
+
+
+
 
 	
 }

@@ -21,6 +21,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<ul>
+<li class="list-group-item"><a href="<%=request.getContextPath()%>/GoodsList.jsp">상품 리스트</a></li>	<!-- 상품목록/등록/수정/삭제(주문이없는경우) -->
+<li class="list-group-item"><a href="<%=request.getContextPath()%>/Board/BoardList.jsp">문의 게시판</a></li> <!-- 공지 CRUD -->
+</ul>
 <div>
 <form>
 <fieldset>
@@ -43,7 +47,7 @@
 </fieldset>
 	<h1 style="text-align:center" ><%=session.getAttribute("name")%>님 환영합니다.</h1>
 </form>
-<li class="list-group-item"><a href="<%=request.getContextPath()%>/Board/BoardList.jsp">문의 게시판</a></li> <!-- 공지 CRUD -->
+
 <a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 <a href="<%=request.getContextPath()%>/<%=session.getAttribute("user")%>outIdForm.jsp">회원탈퇴</a>
 </div>

@@ -76,6 +76,17 @@
 				<td><%=map.get("customerTelephone")%></td>
 			</tr>			
 		</table>
-	<a href="<%=request.getContextPath()%>/admin/adminOrdersList.jsp">돌아가기</a>
+<!-- 접속한 session을 판단해서 고객 / 관리자 나누기  -->
+<%
+if(session.getAttribute("user").equals("Employee")){
+%>
+<a href="<%=request.getContextPath()%>/admin/adminGoodsList.jsp">돌아가기</a>
+<% 
+}else{
+%>
+<a href="<%=request.getContextPath()%>/GoodsList.jsp">돌아가기</a>
+<%
+}
+%>
 </body>
 </html>

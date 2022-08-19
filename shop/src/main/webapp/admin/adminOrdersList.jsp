@@ -73,7 +73,7 @@
 							<input type="hidden" name="orderNo" value="<%=map.get("orderNo")%>">
 						<select name="state">
 						<%
-							if(map.get("orderState").equals("orderCom")){
+							if(map.get("orderState").equals("주문완료")){
 						%>
 							<option value="orderCom" selected="selected">주문완료</option>
 							<option value="orderDelivery">배송중</option>
