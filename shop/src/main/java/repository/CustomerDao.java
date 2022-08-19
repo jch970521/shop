@@ -53,7 +53,7 @@ public class CustomerDao {
 	public List<Customer> selectCustomerList(Connection conn, int rowPerPage , int beginRow) throws Exception{
 		List<Customer> customerList = new ArrayList<>();
 		Customer customer = null;
-		String sql = "SELECT customer_id , customer_name , customer_address , customer_telephone , update_date , create_date FROM customer ORDER BY create_date DESC LIMIT ?,? ";
+		String sql = "SELECT customer_id , customer_name , customer_address , customer_detail, customer_telephone , update_date , create_date FROM customer ORDER BY create_date DESC LIMIT ?,? ";
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -73,6 +73,7 @@ public class CustomerDao {
 				customer.setCustomerId(rs.getString("customer_id"));
 				customer.setCustomerName(rs.getString("customer_name"));
 				customer.setCustomerAddress(rs.getString("customer_address"));
+				customer.setCustomerDetail(rs.getString("customer_detail"));
 				customer.setCustomerTelephone(rs.getString("customer_telephone"));
 				customer.setUpdateDate(rs.getString("update_date"));
 				customer.setCreateDate(rs.getString("create_date"));
@@ -89,7 +90,7 @@ public class CustomerDao {
 	public int insertCustomer(Connection conn, Customer Customer) {
 	
 		PreparedStatement stmt = null;
-		String sql ="INSERT INTO customer( customer_id , customer_pass , customer_name , customer_address , customer_telephone , update_date , create_date ) VALUES ( ? , password(?) , ? , ? , ? , now() , now() )";
+		String sql ="INSERT INTO customer( customer_id , customer_pass , customer_name , customer_address , customer_detail , customer_telephone , update_date , create_date ) VALUES ( ? , password(?) , ? , ? , ? , ? , now() , now() )";
 		
 		int row = 0;
 		try {
@@ -98,7 +99,8 @@ public class CustomerDao {
 			stmt.setString(2, Customer.getCustomerPass());
 			stmt.setString(3, Customer.getCustomerName());
 			stmt.setString(4, Customer.getCustomerAddress());
-			stmt.setString(5, Customer.getCustomerTelephone());
+			stmt.setString(5, Customer.getCustomerDetail());
+			stmt.setString(6, Customer.getCustomerTelephone());
 			
 			row = stmt.executeUpdate();
 			

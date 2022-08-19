@@ -43,6 +43,7 @@
 	<%=session.getAttribute("name") %> <!--  로그인 이름 -->
 	</td>
 	</tr>
+	
 </table>
 </fieldset>
 	<h1 style="text-align:center" ><%=session.getAttribute("name")%>님 환영합니다.</h1>

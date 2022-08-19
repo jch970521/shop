@@ -93,7 +93,7 @@ public class EmployeeDao {
 	
 	public int insertEmployee(Connection conn, Employee Employee) {
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO employee ( employee_id , employee_pass , employee_name , update_date , create_date) VALUES ( ? , password(?) , ? , now() , now() )";
+		String sql = "INSERT INTO employee ( employee_id , employee_pass , employee_name , employee_address , employee_detail , update_date , create_date) VALUES ( ? , password(?) , ? , ? , ? , now() , now() )";
 	
 		int row = 0;
 		try {
@@ -101,7 +101,8 @@ public class EmployeeDao {
 			stmt.setString(1, Employee.getEmployeeId());
 			stmt.setString(2, Employee.getEmployeePass());
 			stmt.setString(3, Employee.getEmployeeName());
-	
+			stmt.setString(4, Employee.getEmployeeAddress());
+			stmt.setString(5, Employee.getEmployeeDetail());
 			row = stmt.executeUpdate();
 			
 		}catch(Exception e) {

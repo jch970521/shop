@@ -64,7 +64,7 @@
 		<tr>
 			<td><%=c.getCustomerId()%></td>
 			<td><%=c.getCustomerName()%></td>
-			<td><%=c.getCustomerAddress()%></td>
+			<td><%=c.getCustomerAddress()%> <%=c.getCustomerDetail() %></td>
 			<td><%=c.getCustomerTelephone()%></td>
 			<td><%=c.getUpdateDate()%></td>
 			<td><%=c.getCreateDate()%></td>	

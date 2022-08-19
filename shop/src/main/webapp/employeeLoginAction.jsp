@@ -24,8 +24,6 @@
 	
 	System.out.println(paramEmployee.getEmployeeId());
 	System.out.println(paramEmployee.getEmployeePass());
-	
-	
 	System.out.println(paramEmployee.getActive());
 	
 	if ((paramEmployee = loginEmployee.login(paramEmployee))==null){

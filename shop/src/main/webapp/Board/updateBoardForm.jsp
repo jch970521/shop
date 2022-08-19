@@ -37,7 +37,7 @@
 		</tr>
 		<tr>
 			<td>ID</td>
-			<td><%=board.getBoardWriter()%></td>
+			<td><input type="text" name="board_writer" value="<%=board.getBoardWriter()%>" readonly></td>
 		</tr>
 		<tr>
 			<td>내용</td>

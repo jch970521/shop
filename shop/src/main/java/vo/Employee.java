@@ -4,9 +4,12 @@ public class Employee {
 	private String employeeId;
 	private String employeePass;
 	private String employeeName;
+	private String employeeAddress;
+	private String employeeDetail;
 	private String updateDate;
 	private String createDate;
 	private String active;
+	
 	public String getEmployeeId() {
 		return employeeId;
 	}
@@ -24,6 +27,18 @@ public class Employee {
 	}
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
+	}
+	public String getEmployeeAddress() {
+		return employeeAddress;
+	}
+	public void setEmployeeAddress(String employeeAddress) {
+		this.employeeAddress = employeeAddress;
+	}
+	public String getEmployeeDetail() {
+		return employeeDetail;
+	}
+	public void setEmployeeDetail(String employeeDetail) {
+		this.employeeDetail = employeeDetail;
 	}
 	public String getUpdateDate() {
 		return updateDate;
@@ -43,12 +58,14 @@ public class Employee {
 	public void setActive(String active) {
 		this.active = active;
 	}
+	
 	@Override
 	public String toString() {
 		return "Employee [employeeId=" + employeeId + ", employeePass=" + employeePass + ", employeeName="
-				+ employeeName + ", updateDate=" + updateDate + ", createDate=" + createDate + ", active=" + active
-				+ "]";
+				+ employeeName + ", employeeAddress=" + employeeAddress + ", employeeDetail=" + employeeDetail
+				+ ", updateDate=" + updateDate + ", createDate=" + createDate + ", active=" + active + "]";
 	}
+	
 	
 	
 }

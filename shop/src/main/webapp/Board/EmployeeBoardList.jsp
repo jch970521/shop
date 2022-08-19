@@ -14,6 +14,10 @@
 		int rowPerPage = 5; // 한페이지에 보여줄 갯수
 		int lastPage = 0;
 		
+		//notice 페이징
+		int NrowPerPage = 3; //최대 공지사항 갯수
+		int NlastPage = 0;
+				
 		if(request.getParameter("currentPage") !=null){
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
@@ -24,6 +28,13 @@
 		
 		List<Board> list = new ArrayList<Board>();
 		list = service.getBoardList(rowPerPage, currentPage);
+		
+		//공지사항
+		NoticeService Nservice = new NoticeService();
+		NlastPage = Nservice.lastPage(NrowPerPage);
+				
+		List<Notice> Nlist = new ArrayList<Notice>();
+		Nlist = Nservice.getNoticeList(rowPerPage, currentPage);
 %>
 <!DOCTYPE html>
 <html>
@@ -43,7 +54,28 @@
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/admin/adminCustomerList.jsp">고객관리 리스트</a></li> <!-- 고객목록/고객강제탈퇴/비밀번호수정(전달구현x) -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/Board/EmployeeBoardList.jsp">문의 게시판</a></li> <!-- 공지 CRUD -->
 </ul>
-	<h1>문의 게시판</h1>
+	<h1>공지사항</h1>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<td>번호</td>
+					<td>제목</td>
+					<td>작성날짜</td>
+			</thead>
+				<tbody>
+				<%
+					for(Notice n : Nlist){
+				%>
+					<tr>
+						<td><%=n.getNoticeNo()%></td>
+						<td><a href="<%=request.getContextPath()%>/Board/NoticeOne.jsp?notice_no=<%=n.getNoticeNo()%>"><%=n.getNoticeTitle()%></a></td>
+						<td><%=n.getCreateDate()%></td>		
+				<%	
+					}
+				%>
+				</tbody>
+		</table>
+	<h3>문의 게시판</h3>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -91,6 +123,7 @@
 
 		%>
 </div>
+<a href="<%=request.getContextPath()%>/Board/insertNoticeForm.jsp">공지사항 작성</a>
 <a href="<%=request.getContextPath()%>/Board/insertBoardForm.jsp">글 작성하기</a>
 <a href="<%=request.getContextPath()%>/admin.index.jsp">돌아가기</a>	
 </body>

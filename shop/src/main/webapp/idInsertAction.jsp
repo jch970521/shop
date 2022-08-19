@@ -10,6 +10,7 @@
 	String customerPw = request.getParameter("customerPw");
 	String customerName = request.getParameter("customerName");
 	String customerAddress = request.getParameter("customerAddress");
+	String customerDetail = request.getParameter("customerDetail");
 	String customerTelephone = request.getParameter("customerTelephone");
 	
 	System.out.println(customerId);
@@ -23,6 +24,7 @@
 	customer.setCustomerPass(customerPw);
 	customer.setCustomerName(customerName);
 	customer.setCustomerAddress(customerAddress);
+	customer.setCustomerDetail(customerDetail);
 	customer.setCustomerTelephone(customerTelephone);
 	
 	//값확인
