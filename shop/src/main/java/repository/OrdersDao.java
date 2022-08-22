@@ -135,11 +135,12 @@ public class OrdersDao {
 			
 			return list;
 	}
-	
+	 
 	//고객 id로 주문현황 확인.
-	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn,int rowPerPage , int beginRow) throws Exception{
+	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn , int rowPerPage , int beginRow) throws Exception{
 		List<Map<String,Object>> list = new ArrayList<>(); 
 		Map<String,Object> map = new HashMap<String, Object>();
+	
 		//String sql = "SELECT o.order_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date ,g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no  WHERE customer_id = ? ORDER BY create_date DESC LIMIT ? , ?";
 		String sql = "SELECT o.order_no , o.customer_id , o.order_quantity , o.order_price , o.order_address , o.order_state , o.update_date , o.create_date , g.goods_no , g.goods_name , g.goods_price FROM orders o INNER JOIN goods g ON o.goods_no = g.goods_no ORDER BY create_date DESC LIMIT ? , ?";
 
@@ -166,6 +167,7 @@ public class OrdersDao {
 			map.put("goodsPrice", rs.getInt("g.goods_price"));
 			
 			list.add(map);
+			
 		}finally {
 			if(rs!=null) {rs.close();}
 			if(stmt!=null) {stmt.close();}

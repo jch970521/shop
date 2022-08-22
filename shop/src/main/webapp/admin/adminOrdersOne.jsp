@@ -80,11 +80,11 @@
 <%
 if(session.getAttribute("user").equals("Employee")){
 %>
-<a href="<%=request.getContextPath()%>/admin/adminGoodsList.jsp">돌아가기</a>
+<a href="<%=request.getContextPath()%>/admin/adminOrdersList.jsp">돌아가기</a>
 <% 
 }else{
 %>
-<a href="<%=request.getContextPath()%>/GoodsList.jsp">돌아가기</a>
+<a href="<%=request.getContextPath()%>/OrdersList.jsp">돌아가기</a>
 <%
 }
 %>
