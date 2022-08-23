@@ -6,6 +6,8 @@ import vo.*;
 import java.sql.*;
 
 public class OrdersService {
+	
+	
 	//배송현황수정
 	public int modifyOrderState(Orders orderState) {
 		Connection conn = null;
@@ -106,9 +108,11 @@ public class OrdersService {
 	}
 	
 	//고객이 보는 주문페이지
-	public List<Map<String,Object>> getOrdersCustomerListByPage(int rowPerPage , int currentPage) {
+	public List<Map<String,Object>> getOrdersCustomerListByPage(String customerId, int rowPerPage , int currentPage) {
 		List<Map<String,Object>> list = null;
+		
 		Connection conn = null;
+		
 		OrdersDao ordersDao = new OrdersDao();
 		
 		int beginRow = (currentPage - 1) * rowPerPage;
@@ -117,7 +121,7 @@ public class OrdersService {
 			conn = DBUtil.getConnection();
 			
 			System.out.println("conn" + conn);
-			list = ordersDao.selectOrdersListByCustomer(conn, rowPerPage, beginRow);
+			list = ordersDao.selectOrdersListByCustomer(conn, customerId, rowPerPage, beginRow);
 			
 			System.out.println("list" + list);
 		}catch(Exception e) {

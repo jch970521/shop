@@ -11,14 +11,15 @@
 		response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
 		return;
 	}// 정보가 맞지않으면 로그인폼으로
-
+	
 	String reviewContent = request.getParameter("review_content");
 	
 	ReviewDao reviewDao = new ReviewDao();
 	Review review = new Review();
 	
+	//값세팅
 	review.setReviewContent(reviewContent);
-	
+	//값확인
 	System.out.println(review.getReviewContent());
 	
 	ReviewService service = new ReviewService();

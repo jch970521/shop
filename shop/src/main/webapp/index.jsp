@@ -25,6 +25,7 @@
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/GoodsList.jsp">상품 리스트</a></li>	<!-- 상품목록/등록/수정/삭제(주문이없는경우) -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/OrdersList.jsp">내 주문 확인하기</a></li> 	<!-- 주문목록/수정  -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/Board/BoardList.jsp">문의 게시판</a></li> <!-- 공지 CRUD -->
+<li class="list-group-item"><a href="<%=request.getContextPath()%>/review/ReviewList.jsp">리뷰 게시판</a></li>
 </ul>
 <div>
 <form>

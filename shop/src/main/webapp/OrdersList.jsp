@@ -17,12 +17,13 @@
 	}
 	
 	OrdersService service = new OrdersService();
+	String customerId = (String) session.getAttribute("id");
 	
 	lastPage = service.lastPage(rowPerPage);
 	
 	//리스트 호출
 	List<Map<String,Object>> list = new ArrayList<>();
-	list = service.getOrdersListByPage(rowPerPage, currentPage);
+	list = service.getOrdersCustomerListByPage(customerId, rowPerPage, currentPage);
 	
 %>
 <!DOCTYPE html>
@@ -40,8 +41,9 @@
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/GoodsList.jsp">상품 리스트</a></li>	<!-- 상품목록/등록/수정/삭제(주문이없는경우) -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/OrdersList.jsp">내 주문 확인하기</a></li> 	<!-- 주문목록/수정  -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/Board/BoardList.jsp">문의 게시판</a></li> <!-- 공지 CRUD -->
+<li class="list-group-item"><a href="<%=request.getContextPath()%>/review/ReviewList.jsp">리뷰 게시판</a></li>
 </ul>
-	<h1>주문 관리</h1>
+	<h1>주문 확인</h1>
 	<table class="table table-striped">
 			<thead>
 				<tr>
@@ -88,7 +90,7 @@
 						</td>
 						<td><%=map.get("updateDate")%></td>
 						<td><%=map.get("createDate")%></td>
-						<td>
+						<td>		
 						<form action="<%=request.getContextPath()%>/review/ReviewinsertForm.jsp" method="post">
 						<button type="submit">리뷰 작성</button>
 						</form>

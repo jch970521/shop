@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="service.GoodsService"%>
+<%@ page import="service.GoodsService"%>
 <%@ page import="java.util.*" %>
 <%@ page import="vo.*" %>
 <%@ page import="repository.*" %>
@@ -12,10 +12,13 @@
 		return;
 	}// 정보가 맞지않으면 로그인창으로
 	
+	//상품 상세보기
 	int goodsNo = Integer.parseInt(request.getParameter("goods_no")); 
 	GoodsService goodsService = new GoodsService();
 	Map<String, Object> map = goodsService.getGoodsAndImgOne(goodsNo);
+	
 
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -67,6 +70,7 @@
 			<td><%=map.get("contentType")%></td>	
 		</tr>		
 	</table>
+
 	<a href="<%=request.getContextPath()%>/GoodsList.jsp">돌아가기</a>
 </body>
 </html>

@@ -23,8 +23,9 @@
 <body>
 	<div>
 		<h2> 리뷰 작성하기 </h2>
-			<textarea rows="5" cols="80" name="review_content" id="review_content"></textarea>
 			<form action="<%=request.getContextPath()%>/review/ReviewinsertAction.jsp">
+			<textarea rows="5" cols="80" name="review_content"></textarea>
+			<br>
 			<button type="submit">리뷰 작성</button>
 			</form>
 	</div>

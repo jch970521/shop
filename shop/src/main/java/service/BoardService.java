@@ -1,8 +1,6 @@
 package service;
 
 import java.util.*;
-
-
 import repository.*;
 import vo.*;
 import java.sql.*;
@@ -10,6 +8,7 @@ import java.sql.*;
 public class BoardService {
 	private BoardDao boardDao;
 	private DBUtil dbUtil;
+	
 	//±€ ¿€º∫
 	public int insertBoard(Board board) {
 		Connection conn = null;
@@ -126,6 +125,7 @@ public class BoardService {
 		
 		return board;
 	}
+	
 	//lastPage
 	public int lastPage(int rowPerPage){
 		int lastPage = 0;
