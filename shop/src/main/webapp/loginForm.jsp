@@ -25,11 +25,11 @@
 				<table border="1">
 					<tr>
 						<td>ID</td>
-						<td><input type="text" name="customerId" id="customerId"></td>
+						<td><input type="text" name="customerId" id="customerId" value="geust"></td>
 					</tr>
 					<tr>
 						<td>pw</td>
-						<td><input type="password" name="customerPass" id="customerPass"></td>
+						<td><input type="password" name="customerPass" id="customerPass" value="1234"></td>
 					</tr>
 				</table>
 				<button type="button" class="btn btn-info" id="customerBtn">고객 로그인</button>
@@ -44,12 +44,12 @@
 					<tr>
 						<td>ID</td>
 						<td>
-						<input type="text" name="employeeId" id="employeeId">
+						<input type="text" name="employeeId" id="employeeId" value="admin">
 						</td>
 					</tr>
 					<tr>
 						<td>pw</td>
-						<td><input type="password" name="employeePass" id="employeePass"></td>
+						<td><input type="password" name="employeePass" id="employeePass" value="1234"></td>
 					</tr>
 				</table>
 				<button type="button" class="btn btn-info" id="employeeBtn">스태프 로그인</button>
