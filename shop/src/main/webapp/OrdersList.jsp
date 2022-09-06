@@ -79,7 +79,7 @@
 						<td><%=map.get("orderAddress")%></td>
 						<td>
 						<%
-							if(map.get("orderState").equals("주문완료")){
+							if(map.get("orderState").equals("orderCom")){
 						%>
 							주문완료
 						<%	

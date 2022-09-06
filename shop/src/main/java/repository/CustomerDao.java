@@ -142,7 +142,7 @@ public class CustomerDao {
 	
 	public Customer selectCustomerByIdAndPw(Connection conn , Customer customer) throws Exception{
 		Customer loginCustomer = null;
-		String sql ="SELECT customer_id , customer_name FROM customer WHERE customer_id = ? AND customer_pass = PASSWORD(?);";
+		String sql ="SELECT customer_id , customer_name , customer_address FROM customer WHERE customer_id = ? AND customer_pass = PASSWORD(?);";
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
@@ -158,6 +158,7 @@ public class CustomerDao {
 				loginCustomer = new Customer();
 				loginCustomer.setCustomerId(rs.getString("customer_id"));
 				loginCustomer.setCustomerName(rs.getString("customer_name"));
+				loginCustomer.setCustomerAddress(rs.getString("customer_address"));
 			}
 		}finally {
 			if(rs!= null) {rs.close();}

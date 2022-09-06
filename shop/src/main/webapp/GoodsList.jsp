@@ -58,6 +58,7 @@
 				<td>등록된 날짜</td>				
 				<td>수정된 날짜</td>
 				<td>SOLD OUT</td>
+				<td>상품 구매하기</td>
 			</tr>
 		</thead>
 	<tbody>
@@ -71,6 +72,7 @@
 				        <td><%=g.getCreateDate()%></td>
 				        <td><%=g.getUpdateDate()%></td>
 				        <td><%=g.getSoldOut()%></td>
+				        <td><a href="<%=request.getContextPath()%>/GoodsBuyForm.jsp?goods_no=<%=g.getGoodsNo()%>">상품 구매</a>
 				  </tr>
 		<%
 				}

@@ -6,7 +6,36 @@ import vo.*;
 import java.sql.*;
 
 public class OrdersService {
-	
+	//주문하기.
+	public int insertOrder(Orders order) {
+		Connection conn = null;
+		int row = 0;
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			OrdersDao ordersDao = new OrdersDao();
+			OrdersDao.insertOrder(conn, order);
+			conn.commit();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return row;
+	}
 	
 	//배송현황수정
 	public int modifyOrderState(Orders orderState) {

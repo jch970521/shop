@@ -39,11 +39,13 @@
 		</tr>
 		<tr>
 			<th>상품명</th>
-			<td><%=map.get("goodsName")%></td>	
+			<td><input type="hidden" name="goods_name" value="<%=map.get("goodsName")%>">
+			<%=map.get("goodsName")%></td>	
 		</tr>
 		<tr>
 			<th>상품가격</th>
-			<td><%=map.get("goodsPrice")%></td>	
+			<td><input type="hidden" name="goods_price" value="<%=map.get("goodsPrice")%>">
+			<%=map.get("goodsPrice")%></td>	
 		</tr>
 		<tr>
 			<th>상품등록날짜</th>
@@ -70,8 +72,6 @@
 			<td><%=map.get("contentType")%></td>	
 		</tr>		
 	</table>
-	
-	<a href="<%=request.getContextPath()%>/GoodsBuyForm.jsp">상품 구매하기</a>
 	<a href="<%=request.getContextPath()%>/GoodsList.jsp">돌아가기</a>
 </body>
 </html>

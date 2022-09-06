@@ -15,7 +15,7 @@ public class OrdersDao {
 	
 
 	public int updateOrderState(Connection conn, Orders orderState) {
-		String sql = "UPDATE orders SET order_state = ? WHERE order_no = ?";
+		String sql = "UPDATE orders SET order_state = ? , update_date = now() WHERE order_no = ?";
 		PreparedStatement stmt = null;
 		int row = 0;
 		
@@ -84,7 +84,7 @@ public class OrdersDao {
 		return map;
 	}
 	
-	// 5-1 °í°´ ÁÖ¹®¸®½ºÆ® È®ÀÎ(°ü¸®ÀÚ)
+	// 5-1 ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È®ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	public List<Map<String,Object>> selectOrdersList(Connection conn, int rowPerPage , int beginRow ) throws Exception{
 			List<Map<String,Object>> list = new ArrayList<>(); 
 			Map<String,Object> map = new HashMap<>();
@@ -136,7 +136,7 @@ public class OrdersDao {
 			return list;
 	}
 	 
-	//°í°´ id·Î ÁÖ¹®ÇöÈ² È®ÀÎ.
+	//ï¿½ï¿½ idï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½È² È®ï¿½ï¿½.
 	public List<Map<String,Object>> selectOrdersListByCustomer(Connection conn ,String customerId, int rowPerPage , int beginRow) throws Exception{
 		List<Map<String,Object>> list = new ArrayList<>(); 
 		Map<String,Object> map = new HashMap<>();
@@ -211,6 +211,35 @@ public class OrdersDao {
 			if(stmt!= null) {stmt.close();}
 		}
 		return totalCount;
+	}
+
+
+	public static int insertOrder(Connection conn, Orders order) {
+		String sql ="INSERT INTO orders(goods_no , customer_id , order_quantity , order_price , order_address , update_date , create_date) VALUES ( ? , ? , ? , ? , ? , NOW() , NOW() );";
+		PreparedStatement stmt = null;
+		int row = 0;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, order.getGoodsNo());
+			stmt.setString(2 , order.getCustomerId());
+			stmt.setInt(3, order.getOrderQuantity());
+			stmt.setInt(4, order.getOrderPrice());
+			stmt.setString(5, order.getOrderAddress());
+			
+			row = stmt.executeUpdate();
+			System.out.println("INSERT Order stmt  : " + stmt);
+			
+		}catch(Exception e) {
+			try {
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		System.out.println("insert row í™•ì¸ : " + row);
+		return row;
+		
 	}
 
 
