@@ -10,7 +10,28 @@ import java.util.List;
 import vo.Notice;
 
 public class NoticeDao {
-		//±Û ÀÛ¼º
+		public int deleteNotice(Connection conn, int noticeNo) {
+			String sql = "DELETE FROM notice WHERE notice_no = ? ";
+			
+			PreparedStatement stmt = null;
+			
+			int row = 0;
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, noticeNo);
+				row = stmt.executeUpdate();
+				
+			}catch(Exception e) {
+				try {
+					stmt.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+			return row;
+		}
+	
+		//ï¿½ï¿½ ï¿½Û¼ï¿½
 		public int insertNotice(Connection conn, Notice notice) {
 			String sql = "INSERT INTO notice(notice_title,notice_content,update_date,create_date) VALUES ( ? , ? , now() , now() )";
 			PreparedStatement stmt = null;
@@ -30,11 +51,11 @@ public class NoticeDao {
 					e1.printStackTrace();
 				}
 			}
-			System.out.println("insert row È®ÀÎ : " + row);
+			System.out.println("insert row È®ï¿½ï¿½ : " + row);
 			return row;
 		}
 	
-		//±Û ¼öÁ¤ÇÏ±â
+		//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 		public int updateNotice(Connection conn, Notice notice) throws Exception {
 			String sql = "UPDATE notice SET notice_title = ? , notice_content = ? , update_date = now() WHERE notice_no = ?";
 			PreparedStatement stmt = null;
@@ -46,7 +67,7 @@ public class NoticeDao {
 				stmt.setInt(3, notice.getNoticeNo());
 				
 				row = stmt.executeUpdate();
-				System.out.println("update notice stmt È®ÀÎ "  + stmt);
+				System.out.println("update notice stmt È®ï¿½ï¿½ "  + stmt);
 
 			}catch(Exception e) {
 				try {
@@ -59,7 +80,7 @@ public class NoticeDao {
 			return row;
 		}
 	
-		//»ó¼¼º¸±â
+		//ï¿½ó¼¼ºï¿½ï¿½ï¿½
 		public Notice selectNoticeOne(Connection conn, int noticeNo) throws Exception{
 			Notice notice = null;
 			String sql ="SELECT notice_no , notice_title , notice_content , update_date , create_date FROM notice WHERE notice_no = ?";
@@ -102,13 +123,13 @@ public class NoticeDao {
 			
 			while(rs.next()) {
 				notice = new Notice();
-				//°ª³Ö±â
+				//ï¿½ï¿½ï¿½Ö±ï¿½
 				notice.setNoticeNo(rs.getInt("notice_no"));
 				notice.setNoticeTitle(rs.getString("notice_title"));
 				notice.setUpdateDate(rs.getString("update_date"));
 				notice.setCreateDate(rs.getString("create_date"));
 				
-				//list¿¡ ³Ö±â
+				//listï¿½ï¿½ ï¿½Ö±ï¿½
 				list.add(notice);
 			}
 		}finally {
@@ -118,7 +139,7 @@ public class NoticeDao {
 		return list;
 	}
 	
-	//°øÁö»çÇ× °¹¼ö ¼¼±â
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public int NoticeCount(Connection conn) throws Exception {
 		int totalCount = 0;
 		String sql = "SELECT COUNT(*) count FROM notice"; 

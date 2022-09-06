@@ -14,7 +14,38 @@ public class NoticeService {
 	private NoticeDao noticeDao;
 	private DBUtil dbUtil;
 	
-	//±€ ¿€º∫
+	//ÏÇ≠Ï†ú
+	public void deleteNotice(int noticeNo) {
+		Connection conn = null;
+		
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			
+			NoticeDao noticeDao = new NoticeDao();
+			noticeDao.deleteNotice(conn, noticeNo);
+			
+			System.out.println("noticeNo ÌôïÏù∏ " + noticeNo);
+			
+			conn.commit();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	//ÔøΩÔøΩ ÔøΩ€ºÔøΩ
 		public int insertNotice(Notice notice) {
 			Connection conn = null;
 			int row = 0;
@@ -42,7 +73,7 @@ public class NoticeService {
 			return row;
 		}
 	
-	//±€ ºˆ¡§
+	//ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ
 	public int updateNotice(Notice notice) {
 		Connection conn = null;
 		int row=0;
@@ -71,7 +102,7 @@ public class NoticeService {
 		return row;
 	}
 	
-	//ªÛºº∫∏±‚
+	//ÔøΩÛºº∫ÔøΩÔøΩÔøΩ
 		public Notice getNoticeOne(int noticeno) {
 			Notice notice = null;
 			Connection conn = null;
@@ -141,11 +172,11 @@ public class NoticeService {
 			try {
 				conn = this.dbUtil.getConnection();
 				
-				System.out.println("boardService conn »Æ¿Œ " + conn);
+				System.out.println("boardService conn »ÆÔøΩÔøΩ " + conn);
 				
 				list = this.noticeDao.selectNoticeList(conn, rowPerPage, beginRow);
 				
-				System.out.println("boardList »Æ¿Œ " + list);
+				System.out.println("boardList »ÆÔøΩÔøΩ " + list);
 				
 				
 			}catch(Exception e) {

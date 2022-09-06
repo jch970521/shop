@@ -70,7 +70,8 @@
 			<td><%=map.get("contentType")%></td>	
 		</tr>		
 	</table>
-
+	
+	<a href="<%=request.getContextPath()%>/GoodsBuyForm.jsp">상품 구매하기</a>
 	<a href="<%=request.getContextPath()%>/GoodsList.jsp">돌아가기</a>
 </body>
 </html>

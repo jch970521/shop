@@ -48,13 +48,23 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp">메인페이지</a>
+    </li>
+  </ul>
+</nav>
 <ul class="list-group list-group-horizontal"> <!-- 상단메뉴 -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/GoodsList.jsp">상품 리스트</a></li>	<!-- 상품목록/등록/수정/삭제(주문이없는경우) -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/OrdersList.jsp">내 주문 확인하기</a></li> 	<!-- 주문목록/수정  -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/Board/BoardList.jsp">문의 게시판</a></li> <!-- 공지 CRUD -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/review/ReviewList.jsp">리뷰 게시판</a></li>
 </ul>
-	<h1>공지사항</h1>
+<% if(currentPage == 1){
+	
+%>
+<h1>공지사항</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -69,12 +79,16 @@
 					<tr>
 						<td><%=n.getNoticeNo()%></td>
 						<td><a href="<%=request.getContextPath()%>/Board/NoticeOne.jsp?notice_no=<%=n.getNoticeNo()%>"><%=n.getNoticeTitle()%></a></td>
-						<td><%=n.getCreateDate()%></td>		
+						<td><%=n.getCreateDate()%></td>
 				<%	
 					}
 				%>
 				</tbody>
 		</table>
+	
+<%
+}
+%>
 	<h3>문의 게시판</h3>
 		<table class="table table-striped">
 			<thead>

@@ -47,6 +47,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="<%=request.getContextPath()%>/admin.index.jsp">메인페이지</a>
+    </li>
+  </ul>
+</nav>
 <ul class="list-group list-group-horizontal"> <!-- 상단메뉴 -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/admin/employeeList.jsp">사원 리스트</a></li>			<!--  -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/admin/adminGoodsList.jsp">상품관리 리스트</a></li>	<!-- 상품목록/등록/수정/삭제(주문이없는경우) -->
@@ -54,6 +61,9 @@
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/admin/adminCustomerList.jsp">고객관리 리스트</a></li> <!-- 고객목록/고객강제탈퇴/비밀번호수정(전달구현x) -->
 <li class="list-group-item"><a href="<%=request.getContextPath()%>/Board/EmployeeBoardList.jsp">문의 게시판</a></li> <!-- 공지 CRUD -->
 </ul>
+<% if(currentPage == 1){
+	
+%>
 	<h1>공지사항</h1>
 		<table class="table table-striped">
 			<thead>
@@ -61,6 +71,7 @@
 					<td>번호</td>
 					<td>제목</td>
 					<td>작성날짜</td>
+					<td>삭제</td>
 			</thead>
 				<tbody>
 				<%
@@ -69,12 +80,22 @@
 					<tr>
 						<td><%=n.getNoticeNo()%></td>
 						<td><a href="<%=request.getContextPath()%>/Board/NoticeOne.jsp?notice_no=<%=n.getNoticeNo()%>"><%=n.getNoticeTitle()%></a></td>
-						<td><%=n.getCreateDate()%></td>		
+						<td><%=n.getCreateDate()%></td>
+						<td>
+						<form action="<%=request.getContextPath()%>/Board/deleteNoticeAction.jsp" method="post">
+						<input type="hidden" name="notice_no" value="<%=n.getNoticeNo()%>">
+						<button type="submit">삭제</button>
+						</form>
+						</td>	
 				<%	
 					}
 				%>
 				</tbody>
 		</table>
+		<%
+}
+		%>
+		
 	<h3>문의 게시판</h3>
 		<table class="table table-striped">
 			<thead>
