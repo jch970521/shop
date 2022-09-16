@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
   <ul class="navbar-nav">
     <li class="nav-item active">
@@ -85,4 +86,25 @@
 		}
 	});
 </script>
+
+    <!-- Footer Section Begin -->
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Name : JchShop</li>
+                            <li>Address : 서울 어딘가 </li>
+                            <li>Phone: 010-1010-2020</li>
+                        </ul>
+                    </div>
+                </div>
+                </div>   
+            </div>
+    </footer>
+    <!-- Footer Section End -->
 </html>
